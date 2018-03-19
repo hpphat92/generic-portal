@@ -1,0 +1,9 @@
+<mat-toolbar class="auth-header" color="primary">
+  <button mat-button (click)="toggleSidenav.emit()" class="toggle-sidebar">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>{{header}}</span>
+
+
+  <user-avatar (click)="gotoProfile()"></user-avatar>
+</mat-toolbar>

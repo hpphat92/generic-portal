@@ -1,0 +1,56 @@
+<div class="page-layout blank p-24">
+  <div class="profile-container">
+    <mat-tab-group>
+      <mat-tab label="Personal Data">
+        <div class="personal-data">
+          <div class="avatar-url">
+            <user-avatar [edit]="true" [(src)]="profileForm.controls['avatarUrl'].value"></user-avatar>
+          </div>
+          <form name="profileForm" [formGroup]="profileForm" novalidate>
+            <mat-form-field>
+              <input matInput placeholder="First Name" formControlName="firstName">
+              <mat-error *ngIf="profileFormErrors.firstName.required">
+                First Name is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Last Name" formControlName="lastName">
+              <mat-error *ngIf="profileFormErrors.lastName.required">
+                Last Name is required
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input readonly="true" matInput placeholder="Email" formControlName="email">
+              <!--<mat-error *ngIf="profileFormErrors.email.required">-->
+              <!--Email is required-->
+              <!--</mat-error>-->
+              <!--<mat-error *ngIf="!profileFormErrors.email.required && profileFormErrors.email.email">-->
+              <!--Please enter a valid email address-->
+              <!--</mat-error>-->
+            </mat-form-field>
+            <mat-select placeholder="Current Organisation" *ngIf="partners && partners.length > 1"
+                        formControlName="partner">
+              <mat-option *ngFor="let partner of partners" [value]="partner">
+                {{ partner.name }}
+              </mat-option>
+            </mat-select>
+            <mat-form-field *ngIf="partners && partners.length < 2">
+              <input matInput placeholder="Current Organisation"
+                     [value]="profileForm.controls['partner'].value.name"
+                     readonly="true"/>
+            </mat-form-field>
+
+            <div class="action-buttons">
+              <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
+                      (click)="saveProfile()"
+                      [disabled]="profileForm.invalid">
+                Save Profile
+              </button>
+              <button mat-button="" mat-raised-button="" (click)="logout()">Logout</button>
+            </div>
+          </form>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

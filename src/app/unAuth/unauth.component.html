@@ -1,0 +1,32 @@
+<div id="login">
+  <div id="header">
+    <div class="header-logo">
+      <img [src]="config.site.logo.header" alt="">
+    </div>
+    <button mat-button [matMenuTriggerFor]="userMenu" class="dropdown-button">
+      <div>
+        <mat-icon>menu</mat-icon>
+      </div>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item>
+        <span>Features</span>
+      </button>
+      <button mat-menu-item>
+        <span>Pricing</span>
+      </button>
+
+      <button mat-menu-item>
+        <span>Log In/Sign Up</span>
+      </button>
+    </mat-menu>
+    <div class="button-group">
+      <a href="javascript:void(0)" class="button">Features</a>
+      <a href="javascript:void(0)" class="button">Pricing</a>
+      <a href="javascript:void(0)" class="button active">Log In/Sign Up</a>
+    </div>
+  </div>
+  <div id="login-header">Welcome to your personalized Trabble Portal!</div>
+  <router-outlet></router-outlet>
+  <div id="footer"></div>
+</div>

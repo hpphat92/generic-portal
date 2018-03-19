@@ -1,0 +1,77 @@
+:host /deep/ {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  .profile-container {
+    display: flex;
+    mat-tab-group {
+      width: 100%;
+      .mat-tab-label {
+        height: 60px;
+      }
+      .mat-tab-header {
+        border-bottom: 2px solid #C0C0C0;
+      }
+    }
+    .personal-data {
+      display: flex;
+      padding-top: 10px;
+      @media screen and (max-width: 568px) {
+        & {
+          flex-direction: column;
+          align-items: center;
+          form {
+            width: 100% !important;
+            margin: 0 !important;
+            button {
+              width: 100%;
+            }
+          }
+        }
+      }
+      .avatar-url {
+        width: 15%;
+        padding: 25px;
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        user-avatar {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          img {
+            width: 100% !important;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+        @media screen and (max-width: 568px) {
+          width: 50%;
+        }
+        @media screen and (max-width: 768px) and (min-width: 569px) {
+          width: 25%;
+          padding: 10px;
+        }
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+          width: 20%;
+          padding: 15px;
+        }
+      }
+      form {
+        width: 70%;
+        margin: auto;
+        mat-form-field {
+          margin-bottom: 10px;
+          width: 100%;
+          .mat-input-underline {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+

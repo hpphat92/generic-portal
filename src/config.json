@@ -1,0 +1,14 @@
+{
+  "site": {
+    "domain": "https://genericportalbackend.azurewebsites.net",
+    "apiUrl": {
+      "login": "/.auth/login/custom",
+      "register": "/api/user/signup"
+    },
+    "logo": {
+      "main_logo": "/assets/icon/appicon_1024.png",
+      "header": "assets/images/Logo_FA-01.png",
+      "sidebarLogo": "assets/icon/trabble_logo_transparent.png"
+    }
+  }
+}

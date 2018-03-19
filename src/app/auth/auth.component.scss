@@ -1,0 +1,112 @@
+$sidebar-nav-width: 85px;
+:host /deep/ {
+  display: block;
+  height: 100%;
+  width: 100%;
+  .auth-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    mat-sidenav-content {
+      app-toolbar {
+        display: block;
+        height: 64px;
+      }
+
+      .content-container {
+        padding: 0 0 10px 10px;
+        position: relative;
+        height: calc(100% - 74px);
+        > *:not(router-outlet) {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          .page-container {
+            overflow: auto;
+            padding: 5px;
+          }
+        }
+        mat-toolbar {
+          border-bottom: 2px solid #C0C0C0;
+        }
+      }
+    }
+    .auth-sidenav {
+      width: $sidebar-nav-width;
+      background: linear-gradient(0deg, #4A5A6C 0%, #474C53 0%, #3F454C 0%, #303841 100%);
+      .sidebar-logo {
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        img {
+          max-height: 100%;
+        }
+      }
+      .sidebar-menu {
+        padding: 20px 8px;
+        .menu-item {
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 12px 8px;
+          border-radius: 9px;
+          outline: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          &.active {
+            background: #414A54;
+          }
+          .menu-icon {
+            text-align: center;
+            img {
+              width: 50%;
+              padding: 10%;
+            }
+            mat-icon {
+              color: #fff;
+              font-size: 32px;
+              width: 32px;
+              height: 32px;
+            }
+          }
+          .menu-title {
+            color: #fff;
+            font-size: 10px;
+            text-align: center;
+            font-weight: 500;
+            line-height: 11px;
+            margin-top: 3px;
+          }
+        }
+      }
+    }
+  }
+
+  .auth-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: #3a4148;
+  }
+
+  .auth-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .mat-drawer-content {
+    display: flex !important;
+    flex-direction: column;
+  }
+}
+

@@ -1,0 +1,28 @@
+<ng-container>
+  <mat-sidenav-container class="auth-container">
+    <mat-sidenav #sidenav mode="side" [opened]="!mediaMatcher.matches" class="auth-sidenav"
+                 [fixedInViewport]="true" [fixedTopGap]="false"
+                 [fixedBottomGap]="false"
+                 [mode]="mediaMatcher.matches?'over':'side'">
+      <div class="sidebar-logo">
+        <img [src]="config.site.logo.sidebarLogo" alt="">
+      </div>
+      <div class="sidebar-menu">
+        <div class="menu-item" *ngFor="let menu of sidebarMenus" [routerLink]="menu.href"
+             routerLinkActive="active">
+          <div class="menu-icon">
+            <img [src]="menu.iconUrl" *ngIf="menu.iconUrl">
+            <mat-icon *ngIf="menu.icon">{{menu.icon}}</mat-icon>
+          </div>
+          <div class="menu-title">{{menu.title}}</div>
+        </div>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-toolbar (toggleSidenav)="sidenav.toggle()"></app-toolbar>
+      <div class="content-container">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-container>

@@ -1,0 +1,50 @@
+<div id="login-form-wrapper">
+  <div id="login-form">
+    <div class="logo">
+      <img [src]="config.site.logo.main_logo">
+    </div>
+    <div class="title">LOGIN TO YOUR ACCOUNT</div>
+
+    <form name="loginForm" [formGroup]="loginForm" novalidate>
+
+      <mat-form-field>
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="loginFormErrors.email.required">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="!loginFormErrors.email.required && loginFormErrors.email.email">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Password" formControlName="password" type="password">
+        <mat-error *ngIf="loginFormErrors.password.required">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+
+      <div class="remember-forgot-password">
+        <mat-checkbox class="remember-me" aria-label="Remember Me">
+          Remember Me
+        </mat-checkbox>
+
+        <a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">
+          Forgot Password?
+        </a>
+      </div>
+
+      <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
+              (click)="login()"
+              [disabled]="loginForm.invalid">
+        LOGIN
+      </button>
+
+    </form>
+    <div class="register">
+      <span class="text">Don't have an account?</span>
+      <a class="link" [routerLink]="'/unauth/register'">Create an account</a>
+    </div>
+
+  </div>
+</div>

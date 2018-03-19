@@ -1,0 +1,93 @@
+:host /deep/ {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  #login {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    //background-color: #3F434C;
+    background: url("../../assets/images/Group.png");
+    &:before {
+      background: #3F434C;
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 60%;
+      content: '';
+      z-index: 0;
+      margin-left: 2px;
+    }
+    #header {
+      display: flex;
+      min-height: 85px;
+      align-items: center;
+      margin: 0;
+      z-index: 1;
+      .header-logo {
+        height: 80px;
+        flex-grow: 1;
+        img {
+          height: 100%;
+        }
+      }
+      @media screen and (max-width: 768px) {
+        .dropdown-button {
+          display: block !important;
+        }
+        .button-group {
+          display: none;
+        }
+      }
+      .dropdown-button {
+        display: none;
+        .mat-icon {
+          color: #fff;
+          font-size: 50px !important;
+          width: auto;
+          height: auto;
+        }
+      }
+      .button-group {
+        .button {
+          color: #e3e8ec;
+          font-size: 16px;
+          letter-spacing: 0.02em;
+          font-weight: bold;
+          padding: 0 20px;
+          &.active {
+            color: #fcaf33;
+          }
+          &:hover {
+            color: #ffdd00;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+    @media screen and (max-width: 768px) and (min-width: 426px) {
+      #login-header {
+        font-size: 20px !important;
+      }
+    }
+    @media screen and (max-width: 425px) {
+      #login-header {
+        font-size: 16px !important;
+      }
+    }
+    #login-header {
+      z-index: 1;
+      text-align: center;
+      color: #e3e8ec;
+      font-size: 26px;
+      font-weight: bolder;
+      margin-bottom: 12px;
+
+    }
+
+  }
+}

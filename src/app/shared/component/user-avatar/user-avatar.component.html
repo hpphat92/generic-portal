@@ -1,0 +1,6 @@
+<label class="image-edit" *ngIf="edit">
+  <input type="file" ngFileSelect #file2 [options]="options" (uploadOutput)="onUploadOutput($event, file2)"
+         [uploadInput]="uploadInput">
+  <mat-icon>create</mat-icon>
+</label>
+<img [src]="userAvatar" alt="">

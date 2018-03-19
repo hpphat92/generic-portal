@@ -1,0 +1,64 @@
+<div id="register-form-wrapper">
+  <div id="register-form">
+    <div class="logo">
+      <img [src]="config.site.logo.main_logo">
+    </div>
+    <div class="title">CREATE AN ACCOUNT</div>
+
+    <form name="registerForm" [formGroup]="registerForm" novalidate>
+
+      <!--<mat-form-field>-->
+        <!--<input matInput placeholder="First Name" formControlName="firstName">-->
+        <!--<mat-error *ngIf="registerFormErrors.firstName.required">-->
+          <!--First Name is required-->
+        <!--</mat-error>-->
+      <!--</mat-form-field>-->
+      <!--<mat-form-field>-->
+        <!--<input matInput placeholder="Last Name" formControlName="lastName">-->
+        <!--<mat-error *ngIf="registerFormErrors.lastName.required">-->
+          <!--Last Name is required-->
+        <!--</mat-error>-->
+      <!--</mat-form-field>-->
+
+      <mat-form-field>
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="registerFormErrors.email.required">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="!registerFormErrors.email.required && registerFormErrors.email.email">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Password" type="password" formControlName="password">
+        <mat-error *ngIf="registerFormErrors.password.required">
+          Password is required
+        </mat-error>
+        <mat-error *ngIf="registerFormErrors.password.pattern">
+          Password should be at least 8 characters includes number and uppercase
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Password (Confirm)" type="password" formControlName="passwordConfirm">
+        <mat-error *ngIf="registerFormErrors.passwordConfirm.required">
+          Password confirmation is required
+        </mat-error>
+        <mat-error *ngIf="!registerFormErrors.passwordConfirm.required && registerFormErrors.passwordConfirm.matchOther">
+          Password confirmation is not match
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT"
+              [disabled]="registerForm.invalid" (click)="register()">
+        CREATE AN ACCOUNT
+      </button>
+    </form>
+    <div class="register">
+      <span class="text">Already have an account?</span>
+      <a class="link" [routerLink]="'/unauth/login'">Signin</a>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,25 @@
+:host /deep/ {
+  .toggle-sidebar {
+
+  }
+  user-avatar {
+    height: calc(100% - 10px);
+    width: 64px;
+    margin-left: auto;
+    cursor: pointer;
+    padding: 5px 0;
+    img {
+      height: 100% !important;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .toggle-sidebar {
+      display: none;
+    }
+  }
+  @media screen and (max-width: 599px) {
+    user-avatar {
+      width: 56px;
+    }
+  }
+}
