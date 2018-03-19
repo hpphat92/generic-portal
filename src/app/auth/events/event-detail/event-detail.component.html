@@ -1,8 +1,12 @@
 <div class="page-layout blank p-24">
   <h2>Events Detail</h2>
+  <div class="save-button">
+    <button mat-button="" mat-raised-button="" [disabled]="!eventDetailForm.valid" color="primary" (click)="save()">Save
+    </button>
+    <button mat-button="" (click)="cancel()">Cancel</button>
+  </div>
 </div>
 <div class="page-container">
-
   <div class="event-data">
     <label class="image-url" [class.editable]="eventDetailForm.controls['ImageUrl'].value">
       <input type="file" ngFileSelect #file2 [options]="options" (uploadOutput)="onUploadOutput($event, file2)"
@@ -53,6 +57,22 @@
             Opening Hours is required
           </mat-error>
         </mat-form-field>
+
+        <!--<div class="form-inline">-->
+        <!--<mat-form-field>-->
+        <!--<input type="number" matInput placeholder="Latitude" formControlName="Latitude">-->
+        <!--&lt;!&ndash;<mat-error *ngIf="eventDetailErrors.Website.required">&ndash;&gt;-->
+        <!--&lt;!&ndash;Website is required&ndash;&gt;-->
+        <!--&lt;!&ndash;</mat-error>&ndash;&gt;-->
+        <!--</mat-form-field>-->
+
+        <!--<mat-form-field>-->
+        <!--<input type="text" matInput placeholder="Opening Hours" formControlName="OpeningHours">-->
+        <!--<mat-error *ngIf="eventDetailErrors.OpeningHours.required">-->
+        <!--Opening Hours is required-->
+        <!--</mat-error>-->
+        <!--</mat-form-field>-->
+        <!--</div>-->
       </form>
       <div class="map-location-viewer"
            leaflet

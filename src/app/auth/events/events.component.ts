@@ -24,7 +24,7 @@ export class EventsComponent implements OnInit {
     }).afterClosed()
       .subscribe((resp) => {
         if (resp) {
-          this.eventsService.removeById(row.id)
+          this.eventsService.removeById(row.Id)
             .subscribe((resp) => {
               this.loadData();
             })

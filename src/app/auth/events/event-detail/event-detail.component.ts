@@ -210,6 +210,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     if (model.Id) {
       subscription = this.eventsService.update(model);
     } else {
+      delete model.Id;
       subscription = this.eventsService.create(model);
     }
     subscription.subscribe((resp) => {
