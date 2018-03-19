@@ -1,6 +1,6 @@
 {
   "site": {
-    "domain": "https://genericportalbackend.azurewebsites.net",
+    "domain": "",
     "apiUrl": {
       "login": "/.auth/login/custom",
       "register": "/api/user/signup"

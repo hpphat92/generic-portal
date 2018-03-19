@@ -28,17 +28,6 @@
               <!--Please enter a valid email address-->
               <!--</mat-error>-->
             </mat-form-field>
-            <mat-select placeholder="Current Organisation" *ngIf="partners && partners.length > 1"
-                        formControlName="partner">
-              <mat-option *ngFor="let partner of partners" [value]="partner">
-                {{ partner.name }}
-              </mat-option>
-            </mat-select>
-            <mat-form-field *ngIf="partners && partners.length < 2">
-              <input matInput placeholder="Current Organisation"
-                     [value]="profileForm.controls['partner'].value.name"
-                     readonly="true"/>
-            </mat-form-field>
 
             <div class="action-buttons">
               <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
