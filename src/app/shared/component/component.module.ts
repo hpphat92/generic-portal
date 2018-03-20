@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LoadingModule } from 'ngx-loading';
 import { DragulaModule } from 'ng2-dragula';
-import { NgxDnDModule } from '@swimlane/ngx-dnd';
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 
 @NgModule({
@@ -21,7 +20,6 @@ import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.componen
     NgUploaderModule,
     ReactiveFormsModule,
     DragulaModule,
-    NgxDnDModule
   ],
   entryComponents: [ConfirmDialogComponent],
   exports: [UserAvatarComponent, ConfirmDialogComponent]
