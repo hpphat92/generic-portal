@@ -1,4 +1,5 @@
-$sidebar-nav-width: 85px;
+@import "../../variables";
+
 :host /deep/ {
   display: block;
   height: 100%;
@@ -94,7 +95,8 @@ $sidebar-nav-width: 85px;
     left: 0;
     right: 0;
     width: 100%;
-    background: #3a4148;
+    background: $topbar-header-color;
+    color: $topbar-header-textcolor;
   }
 
   .auth-footer {

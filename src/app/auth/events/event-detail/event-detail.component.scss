@@ -3,15 +3,54 @@
     display: flex;
     justify-content: space-between;
     padding: 0 20px;
+    min-height: 50px;
+    max-height: 50px;
+  }
+  .image-header-url {
+    input {
+      display: none;
+    }
+    img {
+      height: 350px;
+      width: 100%;
+      object-fit: scale-down;
+    }
+    label {
+      position: relative;
+      height: 100%;
+      display: block;
+      &.editable {
+        &:hover {
+          &:after {
+            position: absolute;
+            padding: 20px;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            content: 'mode_edit';
+            font-family: 'Material Icons', sans-serif;
+            background: #ffffffb3;
+            color: #111;
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+          }
+        }
+      }
+    }
   }
   .event-data {
     display: flex;
     .image-url {
-      width: 30%;
       display: flex;
       justify-content: center;
       position: relative;
-      height: 350px;
+      width: 256px;
+      height: 256px;
+      border-radius: 50%;
       padding: 0;
       margin: 20px;
       &.editable {
@@ -36,13 +75,19 @@
         }
       }
       img {
-        height: 350px;
+        height: 256px;
+        width: 256px;
+        min-width: 256px;
+        max-width: 256px;
+        border-radius: 50%;
       }
       input {
         display: none;
       }
       .image-uploader {
-        width: 100%;
+        width: 256px;
+        height: 256px;
+        border-radius: 50%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -62,6 +107,9 @@
       form {
         mat-form-field {
           width: 100%;
+        }
+        .form-inline {
+          display: flex;
         }
       }
     }

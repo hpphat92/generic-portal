@@ -30,6 +30,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   private eventSubscribler: Subscription;
   public eventDetailForm;
+  public map: any;
   public center: LatLng = latLng(46.879966, -121.726909);
   public newMarker: Marker;
   public eventDetailErrors = {
@@ -72,9 +73,10 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       Id: [''],
       Title: ['', [Validators.required]],
       ImageUrl: ['', [Validators.required]],
+      IconUrl: ['', [Validators.required]],
       // IconUrl: ['ABC'],
-      Latitude: ['', [Validators.required]],
-      Longitude: ['', [Validators.required]],
+      Latitude: ['', [Validators.required, Validators.min(-90), Validators.max(90)]],
+      Longitude: ['', [Validators.required, Validators.min(-180), Validators.max(180)]],
       PhoneNumber: ['', [Validators.required]],
       Website: [''],
       Address: [''],
@@ -108,7 +110,20 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   }
 
+  onLocationInputChanged() {
+    if (this.eventDetailForm.controls['Longitude'].invalid || this.eventDetailForm.controls['Latitude'].invalid) {
+      // do no update
+      return;
+    }
+    if (this.map) {
+      let {Latitude, Longitude} = this.eventDetailForm.getRawValue();
+      this.setMarkerAtPos(this.map, {lat: Latitude, lng: Longitude});
+      this.center = latLng(Latitude || null, Longitude || null);
+    }
+  }
+
   mapReady(map: L.Map) {
+    this.map = map; // Set for further using
     const provider = new GoogleProvider({
       params: {
         key: 'AIzaSyDwgDKWk0AVwlr06iPXerHz5oQALVasuWo',
@@ -227,7 +242,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   // File
   private uploadInput: EventEmitter<UploadInput> = new EventEmitter<UploadInput>();
 
-  public onUploadOutput(output: UploadOutput, file: any): any {
+  public onUploadOutput(output: UploadOutput, file: any, field: string): any {
     switch (output.type) {
       case 'allAddedToQueue':
         // uncomment this if you want to auto upload files when added
@@ -243,7 +258,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         break;
       case 'done':
         this.eventDetailForm.patchValue({
-          ImageUrl: output.file.response.data.url
+          [field]: output.file.response.data.url
         });
         break;
     }

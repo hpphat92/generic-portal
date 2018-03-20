@@ -1,6 +1,8 @@
 {
   "site": {
-    "domain": "",
+    "title": "Generic Template Demo V1",
+    "welcomeMessage": "Welcome to your personalized Trabble Portal!",
+    "domain": "https://genericportalbackend.azurewebsites.net",
     "apiUrl": {
       "login": "/.auth/login/custom",
       "register": "/api/user/signup"

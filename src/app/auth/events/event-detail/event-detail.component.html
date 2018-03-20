@@ -7,15 +7,28 @@
   </div>
 </div>
 <div class="page-container">
-  <div class="event-data">
+  <div class="image-header-url">
     <label class="image-url" [class.editable]="eventDetailForm.controls['ImageUrl'].value">
-      <input type="file" ngFileSelect #file2 [options]="options" (uploadOutput)="onUploadOutput($event, file2)"
+      <input type="file" ngFileSelect #file3 [options]="options"
+             (uploadOutput)="onUploadOutput($event, file3,'ImageUrl')"
              [uploadInput]="uploadInput">
       <div class="image-uploader" *ngIf="!eventDetailForm.controls['ImageUrl'].value">
         <mat-icon>add_a_photo</mat-icon>
         Add Photo
       </div>
       <img [src]="eventDetailForm.controls['ImageUrl'].value" *ngIf="eventDetailForm.controls['ImageUrl'].value" alt="">
+    </label>
+  </div>
+  <div class="event-data">
+    <label class="image-url" [class.editable]="eventDetailForm.controls['IconUrl'].value">
+      <input type="file" ngFileSelect #file2 [options]="options"
+             (uploadOutput)="onUploadOutput($event, file2,'IconUrl')"
+             [uploadInput]="uploadInput">
+      <div class="image-uploader" *ngIf="!eventDetailForm.controls['IconUrl'].value">
+        <mat-icon>add_a_photo</mat-icon>
+        Add Photo
+      </div>
+      <img [src]="eventDetailForm.controls['IconUrl'].value" *ngIf="eventDetailForm.controls['IconUrl'].value" alt="">
     </label>
     <div class="profile-info">
       <form name="eventDetailForm" [formGroup]="eventDetailForm" novalidate>
@@ -58,21 +71,29 @@
           </mat-error>
         </mat-form-field>
 
-        <!--<div class="form-inline">-->
-        <!--<mat-form-field>-->
-        <!--<input type="number" matInput placeholder="Latitude" formControlName="Latitude">-->
-        <!--&lt;!&ndash;<mat-error *ngIf="eventDetailErrors.Website.required">&ndash;&gt;-->
-        <!--&lt;!&ndash;Website is required&ndash;&gt;-->
-        <!--&lt;!&ndash;</mat-error>&ndash;&gt;-->
-        <!--</mat-form-field>-->
+        <div class="form-inline">
+          <mat-form-field>
+            <input type="number" min="-90" max="90" (change)="onLocationInputChanged()" matInput placeholder="Latitude"
+                   formControlName="Latitude">
+            <mat-error *ngIf="eventDetailErrors.Latitude.required">
+              Latitude is required
+            </mat-error>
+            <mat-error *ngIf="eventDetailErrors.Latitude.min || eventDetailErrors.Latitude.max">
+              Latitude should between -90 and 90.
+            </mat-error>
+          </mat-form-field>
 
-        <!--<mat-form-field>-->
-        <!--<input type="text" matInput placeholder="Opening Hours" formControlName="OpeningHours">-->
-        <!--<mat-error *ngIf="eventDetailErrors.OpeningHours.required">-->
-        <!--Opening Hours is required-->
-        <!--</mat-error>-->
-        <!--</mat-form-field>-->
-        <!--</div>-->
+          <mat-form-field>
+            <input type="number" min="-180" max="180" (change)="onLocationInputChanged()" matInput
+                   placeholder="Longitude" formControlName="Longitude">
+            <mat-error *ngIf="eventDetailErrors.Longitude.required">
+              Longitude is required
+            </mat-error>
+            <mat-error *ngIf="eventDetailErrors.Longitude.max || eventDetailErrors.Longitude.min">
+              Longitude should between -180 and 180.
+            </mat-error>
+          </mat-form-field>
+        </div>
       </form>
       <div class="map-location-viewer"
            leaflet

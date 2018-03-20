@@ -325,3 +325,20 @@ a {
 .leaflet-control-geosearch a.reset:hover {
   background: #f5f5f5;
 }
+
+mat-form-field:not(.mat-form-field-invalid) {
+  .mat-form-field-ripple {
+    background-color: $accent-color !important;
+  }
+  // override css
+  &.mat-focused .mat-form-field-label {
+    color: $accent-color !important;
+  }
+  .mat-input-element {
+    caret-color: $accent-color !important;
+  }
+}
+
+a:-webkit-any-link {
+  color: $accent-color;
+}

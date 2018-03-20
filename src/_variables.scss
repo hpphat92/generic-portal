@@ -1,7 +1,18 @@
+// Top bar configure
+$topbar-header-color: #3a4148;
+$topbar-header-textcolor: #fff;
+
+// Side bar configure
+$sidebar-nav-width: 85px;
 $trabble-main-color: #D37F3F;
-$background-main-color: #F3F3F4;
 $sidebar-child-height: 60px;
 
+// Whole app
+$background-main-color: #F3F3F4;
 $light-primary-text: white;
 $primary-color: #ff9800;
-$accent-color: #ffdf95;
+$accent-color: #ffc857;
+
+// Login Page
+$unauth-foreground: #3F434C;
+$unauth-background: url(/assets/images/Group.png)
