@@ -12,7 +12,7 @@ const SMALL_WiDTH_BREAKPOINT = 768;
 export class AuthComponent implements OnInit {
 
   public config = config;
-  private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WiDTH_BREAKPOINT}px`);
+  public mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WiDTH_BREAKPOINT}px`);
   public sidebarMenus = [
     {
       title: 'Home',

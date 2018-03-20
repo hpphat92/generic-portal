@@ -35,16 +35,16 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   public center: LatLng = latLng(46.879966, -121.726909);
   public newMarker: Marker;
   public eventDetailErrors = {
-    Title: '',
-    ImageUrl: '',
-    IconUrl: '',
-    Latitude: '',
-    Longitude: '',
-    PhoneNumber: '',
-    Website: '',
-    Address: '',
-    OpeningHours: '',
-    Description: '',
+    Title: {},
+    ImageUrl: {},
+    IconUrl: {},
+    Latitude: {},
+    Longitude: {},
+    PhoneNumber: {},
+    Website: {},
+    Address: {},
+    OpeningHours: {},
+    Description: {},
   };
   public layers = [];
   options = {
@@ -241,7 +241,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
 
   // File
-  private uploadInput: EventEmitter<UploadInput> = new EventEmitter<UploadInput>();
+  public uploadInput: EventEmitter<UploadInput> = new EventEmitter<UploadInput>();
 
   public onUploadOutput(output: UploadOutput, file: any, field: string): any {
     switch (output.type) {

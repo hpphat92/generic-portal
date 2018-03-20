@@ -4,7 +4,7 @@
 <div class="page-content">
   <form [formGroup]="searchForm" (ngSubmit)="searchPlace()" class="search-container">
     <div class="filter-container">
-      <mat-radio-group formControlName="options" (change)="onSelectionChanged()">
+      <mat-radio-group formControlName="options" (change)="onSelectionChanged($event)">
         <mat-radio-button value="1">Your current location</mat-radio-button>
         <mat-radio-button value="2">Manual entered location</mat-radio-button>
         <mat-radio-button value="3">Manual entered address</mat-radio-button>

@@ -17,8 +17,8 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit {
   public userLocation = {};
   public addressLocation = {};
   public searchFormErrors = {
-    Latitude: '',
-    Longitude: ''
+    Latitude: {},
+    Longitude: {}
   };
 
   constructor(public googlePlaceService: GooglePlaceService,
