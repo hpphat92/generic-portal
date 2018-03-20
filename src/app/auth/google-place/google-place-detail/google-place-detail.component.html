@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>{{place.name}}</h1>
+<div mat-dialog-content>
+  <div class="photo-image">
+    <img [src]="photo" alt="" *ngIf="photo">
+    <div class="no-photo" *ngIf="!photo">
+      No Photo Available
+    </div>
+  </div>
+  <div class="company-name">
+    <a [href]="place.url" target="_blank">{{place.name}}</a>
+  </div>
+  <div class="address">
+    <mat-icon>home</mat-icon>
+    <span *ngIf="place.formatted_address">{{place.formatted_address}}</span>
+    <em *ngIf="!place.formatted_address">No address specified</em>
+  </div>
+  <div class="phone">
+    <mat-icon>phone</mat-icon>
+    <span *ngIf="place.international_phone_number">{{place.international_phone_number}}</span>
+    <em *ngIf="!place.international_phone_number">No phone specified</em>
+  </div>
+  <div class="tag-list">
+    <span class="label-tag" *ngFor="let item of place.types">{{item}}</span>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="closeModel()" tabindex="-1">Close</button>
+</div>

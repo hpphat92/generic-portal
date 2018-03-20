@@ -10,7 +10,8 @@ import * as shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import { UploadInput, UploadOutput } from "ngx-uploader";
 import * as L from 'leaflet';
 import { GeoSearchControl, GoogleProvider } from 'leaflet-geosearch';
-
+import * as _config from '../../../../config.json';
+let config = _config as any;
 function guid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
@@ -126,7 +127,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     this.map = map; // Set for further using
     const provider = new GoogleProvider({
       params: {
-        key: 'AIzaSyDwgDKWk0AVwlr06iPXerHz5oQALVasuWo',
+        key: config.apiKey.googleApi,
       },
     });
     const searchControl = new GeoSearchControl({

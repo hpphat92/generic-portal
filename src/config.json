@@ -12,5 +12,8 @@
       "header": "assets/images/Logo_FA-01.png",
       "sidebarLogo": "assets/icon/trabble_logo_transparent.png"
     }
+  },
+  "apiKey": {
+    "googleApi": "AIzaSyDwgDKWk0AVwlr06iPXerHz5oQALVasuWo"
   }
 }

@@ -1,12 +1,13 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../services/auth';
-import { Observable } from 'rxjs/Observable';
+import { Observable, ObservableInput } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { HttpResponse } from 'selenium-webdriver/http';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/observable/of';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
@@ -43,7 +44,7 @@ export class ErrorsInterceptor implements HttpInterceptor {
         if (err.error && err.error.message) {
           this.toastrService.error(err.error.message, 'Error');
         }
-        return (Observable as any).from([]);
+        return (Observable as any).of([]);
         // throw err;
       }
     });

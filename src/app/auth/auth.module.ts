@@ -14,6 +14,8 @@ import { UserInfoResolve } from '../shared/guard/user-info.resolve';
 import { EventsModule } from "./events/events.module";
 import { EventsComponent } from "./events/events.component";
 import { EventDetailComponent } from "./events/event-detail/event-detail.component";
+import { GooglePlaceModule } from './google-place/google-place.module';
+import { GooglePlaceComponent } from './google-place/google-place.component';
 
 const routes: Routes = [
   {
@@ -32,6 +34,9 @@ const routes: Routes = [
       },
       {
         path: 'events', component: EventsComponent, data: {title: 'Events'}
+      },
+      {
+        path: 'google-place', component: GooglePlaceComponent, data: {title: 'Places'}
       },
       {
         path: 'events/new', component: EventDetailComponent, data: {title: 'Create Event'}
@@ -56,6 +61,7 @@ const routes: Routes = [
     HomeModule,
     EventsModule,
     ProfileModule,
+    GooglePlaceModule,
     RouterModule.forChild(routes),
   ],
   providers: [],

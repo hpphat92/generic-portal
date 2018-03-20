@@ -24,6 +24,11 @@ export class AuthComponent implements OnInit {
       iconUrl: 'assets/images/laptop.svg',
       href: '/auth/events',
     },
+    {
+      title: 'Places',
+      iconUrl: 'assets/images/laptop.svg',
+      href: '/auth/google-place',
+    },
   ];
 
   constructor(private zone: NgZone) {

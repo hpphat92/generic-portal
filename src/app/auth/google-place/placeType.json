@@ -1,0 +1,362 @@
+[
+  {
+    "id": "accounting",
+    "value": "Accounting"
+  },
+  {
+    "id": "airport",
+    "value": "Airport"
+  },
+  {
+    "id": "amusement_park",
+    "value": "Amusement Park"
+  },
+  {
+    "id": "aquarium",
+    "value": "Aquarium"
+  },
+  {
+    "id": "art_gallery",
+    "value": "Art Gallery"
+  },
+  {
+    "id": "atm",
+    "value": "Atm"
+  },
+  {
+    "id": "bakery",
+    "value": "Bakery"
+  },
+  {
+    "id": "bank",
+    "value": "Bank"
+  },
+  {
+    "id": "bar",
+    "value": "Bar"
+  },
+  {
+    "id": "beauty_salon",
+    "value": "Beauty Salon"
+  },
+  {
+    "id": "bicycle_store",
+    "value": "Bicycle Store"
+  },
+  {
+    "id": "book_store",
+    "value": "Book Store"
+  },
+  {
+    "id": "bowling_alley",
+    "value": "Bowling Alley"
+  },
+  {
+    "id": "bus_station",
+    "value": "Bus Station"
+  },
+  {
+    "id": "cafe",
+    "value": "Cafe"
+  },
+  {
+    "id": "campground",
+    "value": "Campground"
+  },
+  {
+    "id": "car_dealer",
+    "value": "Car Dealer"
+  },
+  {
+    "id": "car_rental",
+    "value": "Car Rental"
+  },
+  {
+    "id": "car_repair",
+    "value": "Car Repair"
+  },
+  {
+    "id": "car_wash",
+    "value": "Car Wash"
+  },
+  {
+    "id": "casino",
+    "value": "Casino"
+  },
+  {
+    "id": "cemetery",
+    "value": "Cemetery"
+  },
+  {
+    "id": "church",
+    "value": "Church"
+  },
+  {
+    "id": "city_hall",
+    "value": "City Hall"
+  },
+  {
+    "id": "clothing_store",
+    "value": "Clothing Store"
+  },
+  {
+    "id": "convenience_store",
+    "value": "Convenience Store"
+  },
+  {
+    "id": "courthouse",
+    "value": "Courthouse"
+  },
+  {
+    "id": "dentist",
+    "value": "Dentist"
+  },
+  {
+    "id": "department_store",
+    "value": "Department Store"
+  },
+  {
+    "id": "doctor",
+    "value": "Doctor"
+  },
+  {
+    "id": "electrician",
+    "value": "Electrician"
+  },
+  {
+    "id": "electronics_store",
+    "value": "Electronics Store"
+  },
+  {
+    "id": "embassy",
+    "value": "Embassy"
+  },
+  {
+    "id": "fire_station",
+    "value": "Fire Station"
+  },
+  {
+    "id": "florist",
+    "value": "Florist"
+  },
+  {
+    "id": "funeral_home",
+    "value": "Funeral Home"
+  },
+  {
+    "id": "furniture_store",
+    "value": "Furniture Store"
+  },
+  {
+    "id": "gas_station",
+    "value": "Gas Station"
+  },
+  {
+    "id": "gym",
+    "value": "Gym"
+  },
+  {
+    "id": "hair_care",
+    "value": "Hair Care"
+  },
+  {
+    "id": "hardware_store",
+    "value": "Hardware Store"
+  },
+  {
+    "id": "hindu_temple",
+    "value": "Hindu Temple"
+  },
+  {
+    "id": "home_goods_store",
+    "value": "Home Goods Store"
+  },
+  {
+    "id": "hospital",
+    "value": "Hospital"
+  },
+  {
+    "id": "insurance_agency",
+    "value": "Insurance Agency"
+  },
+  {
+    "id": "jewelry_store",
+    "value": "Jewelry Store"
+  },
+  {
+    "id": "laundry",
+    "value": "Laundry"
+  },
+  {
+    "id": "lawyer",
+    "value": "Lawyer"
+  },
+  {
+    "id": "library",
+    "value": "Library"
+  },
+  {
+    "id": "liquor_store",
+    "value": "Liquor Store"
+  },
+  {
+    "id": "local_government_office",
+    "value": "Local Government Office"
+  },
+  {
+    "id": "locksmith",
+    "value": "Locksmith"
+  },
+  {
+    "id": "lodging",
+    "value": "Lodging"
+  },
+  {
+    "id": "meal_delivery",
+    "value": "Meal Delivery"
+  },
+  {
+    "id": "meal_takeaway",
+    "value": "Meal Takeaway"
+  },
+  {
+    "id": "mosque",
+    "value": "Mosque"
+  },
+  {
+    "id": "movie_rental",
+    "value": "Movie Rental"
+  },
+  {
+    "id": "movie_theater",
+    "value": "Movie Theater"
+  },
+  {
+    "id": "moving_company",
+    "value": "Moving Company"
+  },
+  {
+    "id": "museum",
+    "value": "Museum"
+  },
+  {
+    "id": "night_club",
+    "value": "Night Club"
+  },
+  {
+    "id": "painter",
+    "value": "Painter"
+  },
+  {
+    "id": "park",
+    "value": "Park"
+  },
+  {
+    "id": "parking",
+    "value": "Parking"
+  },
+  {
+    "id": "pet_store",
+    "value": "Pet Store"
+  },
+  {
+    "id": "pharmacy",
+    "value": "Pharmacy"
+  },
+  {
+    "id": "physiotherapist",
+    "value": "Physiotherapist"
+  },
+  {
+    "id": "plumber",
+    "value": "Plumber"
+  },
+  {
+    "id": "police",
+    "value": "Police"
+  },
+  {
+    "id": "post_office",
+    "value": "Post Office"
+  },
+  {
+    "id": "real_estate_agency",
+    "value": "Real Estate Agency"
+  },
+  {
+    "id": "restaurant",
+    "value": "Restaurant"
+  },
+  {
+    "id": "roofing_contractor",
+    "value": "Roofing Contractor"
+  },
+  {
+    "id": "rv_park",
+    "value": "Rv Park"
+  },
+  {
+    "id": "school",
+    "value": "School"
+  },
+  {
+    "id": "shoe_store",
+    "value": "Shoe Store"
+  },
+  {
+    "id": "shopping_mall",
+    "value": "Shopping Mall"
+  },
+  {
+    "id": "spa",
+    "value": "Spa"
+  },
+  {
+    "id": "stadium",
+    "value": "Stadium"
+  },
+  {
+    "id": "storage",
+    "value": "Storage"
+  },
+  {
+    "id": "store",
+    "value": "Store"
+  },
+  {
+    "id": "subway_station",
+    "value": "Subway Station"
+  },
+  {
+    "id": "supermarket",
+    "value": "Supermarket"
+  },
+  {
+    "id": "synagogue",
+    "value": "Synagogue"
+  },
+  {
+    "id": "taxi_stand",
+    "value": "Taxi Stand"
+  },
+  {
+    "id": "train_station",
+    "value": "Train Station"
+  },
+  {
+    "id": "transit_station",
+    "value": "Transit Station"
+  },
+  {
+    "id": "travel_agency",
+    "value": "Travel Agency"
+  },
+  {
+    "id": "veterinary_care",
+    "value": "Veterinary Care"
+  },
+  {
+    "id": "zoo",
+    "value": "Zoo"
+  }
+]
