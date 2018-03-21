@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChildren } from '@angular/core';
 import { GooglePlaceService } from './google-place.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatPaginator } from '@angular/material';
 import * as placeTypes from './placeType.json';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GooglePlaceDetailComponent } from './google-place-detail/google-place-detail.component';
@@ -11,14 +11,38 @@ import { GooglePlaceDetailComponent } from './google-place-detail/google-place-d
   styleUrls: ['./google-place.component.scss'],
 })
 export class GooglePlaceComponent implements OnInit, AfterViewInit {
+
+  @ViewChildren(MatPaginator)
+  public paginators;
+
   public placeTypes = placeTypes;
   public searchForm: FormGroup;
   public places = [];
+  public loading = false;
+  public hasSearch = false;
+  public total = 0;
+  public pageIndex = 0;
   public userLocation = {};
   public addressLocation = {};
   public searchFormErrors = {
     Latitude: {},
     Longitude: {}
+  };
+  public pageResults = {
+    count: 0,
+    placesAtPage: {
+      [0]: [],
+      [1]: [],
+      [2]: []
+    },
+    reset: function () {
+      this.count = 0;
+      this.placesAtPage = {
+        [0]: [],
+        [1]: [],
+        [2]: [],
+      }
+    }
   };
 
   constructor(public googlePlaceService: GooglePlaceService,
@@ -42,7 +66,13 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit {
           Latitude: latitude,
           Longitude: longitude
         });
+        setTimeout(() => {
+          this.showModalDetail({
+            place_id: 'ChIJDZzo5DeuEmsRsi1wzrIp6HY'
+          })
+        }, 1000);
       });
+
   }
 
   ngAfterViewInit(): void {
@@ -117,26 +147,61 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit {
     }
   }
 
+  doSearchForm(model) {
+    return new Promise((resolve, reject) => {
+      let search = (model, pIndex = 0) => {
+        this.googlePlaceService.search(model).then(({ resp, pagination }) => {
+          this.pageResults.placesAtPage[pIndex] = (resp as any[]).map((o) => {
+            o.types = o.types.map((type) => {
+              return type.split('_').join(' ').replace(/\b\w/g, function (l) {
+                return l.toUpperCase()
+              })
+            });
+            return o;
+          });
+          this.pageResults.count += this.pageResults.placesAtPage[pIndex].length;
+          if (pagination.hasNextPage) {
+            setTimeout(() => {
+              model.pageToken = pagination.l;
+              search(model, pIndex + 1);
+            }, 2000);
+          } else {
+            resolve();
+          }
+        }, (err) => {
+          reject(err);
+        })
+      }
+      search(model);
+    })
+  }
+
   searchPlace() {
+
     let { latitude, longitude } = this.getCurrentLocationFromForm() as any;
     let { keyword, radius, category } = this.searchForm.getRawValue();
-    this.googlePlaceService.search({
+    this.pageResults.reset();
+    let nextPageToken = '';
+    this.loading = true;
+    this.hasSearch = true;
+    this.places = [];
+    this.pageIndex = 0;
+    this.total = 0;
+    this.paginators.toArray().forEach((pa) => {
+      pa.firstPage();
+    });
+    this.doSearchForm({
       latitude,
       longitude,
       radius,
       type: category,
       keyword
-    }).then((resp) => {
-      this.places = (resp as any[]).map((o) => {
-        o.types = o.types.map((type) => {
-          return type.split('_').join(' ').replace(/\b\w/g, function (l) {
-            return l.toUpperCase()
-          })
-        });
-        return o;
-      });
-    }, (err) => {
-
+    }).then(() => {
+      this.loading = false;
+      this.total = this.pageResults.count;
+      this.changePage(0);
+    }, () => {
+      this.loading = true;
     })
   }
 
@@ -145,7 +210,7 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit {
 
 
   changePage(page) {
-    console.log(page);
+    this.places = this.pageResults.placesAtPage[page];
   }
 
   showModalDetail(row) {
@@ -153,7 +218,7 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit {
       .then((resp) => {
         const dialogRef = this.mdDialog.open(GooglePlaceDetailComponent, {
           data: resp,
-          width: '340px',
+          width: '400px',
           panelClass: 'place-detail-dlg',
           closeOnNavigation: true,
         });

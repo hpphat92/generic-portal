@@ -4,25 +4,61 @@
 </div>
 <div mat-dialog-content>
   <div class="photo-image">
-    <img [src]="photo" alt="" *ngIf="photo">
-    <div class="no-photo" *ngIf="!photo">
+    <img [src]="photos[0]" alt="" *ngIf="photos[0]">
+    <div class="no-photo" *ngIf="!photos[0]">
       No Photo Available
     </div>
-  </div>
-  <div class="company-name">
-    <a [href]="place.url" target="_blank">{{place.name}}</a>
-  </div>
-  <div class="address">
-    <mat-icon>home</mat-icon>
-    <span *ngIf="place.formatted_address">{{place.formatted_address}}</span>
-    <em *ngIf="!place.formatted_address">No address specified</em>
-  </div>
-  <div class="phone">
-    <mat-icon>phone</mat-icon>
-    <span *ngIf="place.international_phone_number">{{place.international_phone_number}}</span>
-    <em *ngIf="!place.international_phone_number">No phone specified</em>
   </div>
   <div class="tag-list">
     <span class="label-tag" *ngFor="let item of place.types">{{item}}</span>
   </div>
+  <mat-tab-group>
+    <mat-tab label="Info">
+      <div class="content-info">
+        <div class="company-name">
+          <a [href]="place.url" target="_blank">{{place.name}}</a>
+        </div>
+        <div class="address">
+          <mat-icon>home</mat-icon>
+          <span *ngIf="place.formatted_address">{{place.formatted_address}}</span>
+          <em *ngIf="!place.formatted_address">No address specified</em>
+        </div>
+        <div class="phone">
+          <mat-icon>phone</mat-icon>
+          <span *ngIf="place.international_phone_number">{{place.international_phone_number}}</span>
+          <em *ngIf="!place.international_phone_number">No phone specified</em>
+        </div>
+        <div class="website">
+          <mat-icon>home</mat-icon>
+          <a *ngIf="place.website" [href]="place.website" target="_blank">Go to homepage</a>
+          <em *ngIf="!place.website">No website specified</em>
+        </div>
+        <div class="vote">
+          <div class="rating">
+            <rating [(ngModel)]="place.rating"
+                    [max]="5"
+                    fullIcon="★"
+                    emptyIcon="☆"
+                    [readonly]="true"
+                    [disabled]="false"
+                    [float]="true">
+            </rating>
+            <div class="title-rating">({{place.rating || 0}})</div>
+          </div>
+          <div class="price" *ngIf="place.price_level">
+            Price: <em>{{place.price_level}}</em>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Photo">
+      <div class="no-photo-title" *ngIf="!photos.length">
+        No Photo
+      </div>
+      <div class="photo-list">
+        <img [src]="p" *ngFor="let p of photos" class="photo-item" alt="">
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
 </div>

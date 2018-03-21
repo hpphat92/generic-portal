@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
-import { EventsComponent } from './events.component';
+import { UsersComponent } from './users.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { EventDetailComponent } from "./event-detail/event-detail.component";
+import { UserDetailComponent } from "./user-detail/user-detail.component";
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { NgUploaderModule } from 'ngx-uploader';
 import { HttpClientModule } from "@angular/common/http";
 @NgModule({
   declarations: [
-    EventsComponent,
-    EventDetailComponent,
+    UsersComponent,
+    UserDetailComponent,
   ],
   imports: [
     SharedModule,
@@ -20,10 +20,10 @@ import { HttpClientModule } from "@angular/common/http";
   ],
   entryComponents: [],
   exports: [
-    EventsComponent,
-    EventDetailComponent,
+    UsersComponent,
+    UserDetailComponent,
   ]
 })
 
-export class EventsModule {
+export class UsersModule {
 }

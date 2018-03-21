@@ -2,7 +2,7 @@
   <h2>Google Places Search</h2>
 </div>
 <div class="page-content">
-  <form [formGroup]="searchForm" (ngSubmit)="searchPlace()" class="search-container">
+  <form [formGroup]="searchForm" (ngSubmit)="!loading && searchPlace()" class="search-container">
     <div class="filter-container">
       <mat-radio-group formControlName="options" (change)="onSelectionChanged($event)">
         <mat-radio-button value="1">Your current location</mat-radio-button>
@@ -49,13 +49,22 @@
       </mat-form-field>
     </div>
     <button mat-button mat-raised-button color="primary"
-            [disabled]="searchForm.controls['options'].value === '2'? searchForm.invalid: !searchForm.controls['radius'].value"
+            [disabled]="loading || (searchForm.controls['options'].value === '2'? searchForm.invalid: !searchForm.controls['radius'].value)"
             type="submit">
       <mat-icon>search</mat-icon>
       Search
     </button>
   </form>
+  <div class="result-count" *ngIf="!loading && hasSearch">
+    Total results found: {{total}} place(s).
+  </div>
   <div class="table-container mat-elevation-z8">
+    <mat-paginator [length]="total"
+                   [pageSize]="20"
+                   [pageIndex]="pageIndex"
+                   [hidePageSize]="true"
+                   (page)="changePage($event.pageIndex)">
+    </mat-paginator>
     <table class="mat-table">
       <colgroup>
         <col>
@@ -89,15 +98,18 @@
       </tbody>
       <tbody class="no-data" *ngIf="!places?.length">
       <tr>
-        <td colspan="3" class="text-center">No Results</td>
+        <td colspan="3" class="text-center">
+          {{loading?'Searching...': 'No Places'}}
+        </td>
       </tr>
       </tbody>
     </table>
 
-    <mat-paginator [length]="places.length"
+    <mat-paginator [length]="total"
                    [pageSize]="20"
+                   [pageIndex]="pageIndex"
                    [hidePageSize]="true"
-                   (page)="changePage($event)">
+                   (page)="changePage($event.pageIndex)">
     </mat-paginator>
   </div>
 </div>

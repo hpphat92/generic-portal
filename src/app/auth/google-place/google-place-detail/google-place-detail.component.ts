@@ -10,11 +10,26 @@ let config = _config as any;
   styleUrls: ['./google-place-detail.component.scss'],
 })
 export class GooglePlaceDetailComponent implements OnInit, OnDestroy {
-  public photo;
+  public photos;
+  public priceDescription = {
+    0: 'Free',
+    1: 'Inexpensive',
+    2: 'Moderate',
+    3: 'Expensive',
+    4: 'Very Expensive',
+  };
 
   constructor(public dialogRef: MatDialogRef<GooglePlaceDetailComponent>,
               @Inject(MAT_DIALOG_DATA) public place: any) {
-    this.photo = this.place.photos && this.place.photos.length ? this.place.photos[0].getUrl({ maxWidth: 340, maxHeight: 500 }) : null;
+    if (this.place.price_level !== undefined) {
+      this.place.price_level = this.priceDescription[this.place.price_level];
+    }
+    this.photos = (this.place.photos && this.place.photos.length) ? this.place.photos.map(p => {
+      return p.getUrl({
+        maxWidth: 400,
+        maxHeight: 250
+      })
+    }) : []
   }
 
   ngOnInit(): void {

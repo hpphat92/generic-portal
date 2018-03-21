@@ -9,18 +9,18 @@ import { UploadInput, UploadOutput } from 'ngx-uploader';
 import * as L from 'leaflet';
 import { GeoSearchControl, GoogleProvider } from 'leaflet-geosearch';
 import * as _config from '../../../../config.json';
-import { EventsService } from '../../../shared/api';
+import { UserService } from '../../../shared/api';
 
 let config = _config as any;
 
 @Component({
-  selector: 'event-detail',
-  templateUrl: './event-detail.component.html',
-  styleUrls: ['./event-detail.component.scss'],
+  selector: 'user-detail',
+  templateUrl: './user-detail.component.html',
+  styleUrls: ['./user-detail.component.scss'],
 })
-export class EventDetailComponent implements OnInit, OnDestroy {
+export class UserDetailComponent implements OnInit, OnDestroy {
 
-  private eventSubscribler: Subscription;
+  private usersubscribler: Subscription;
   public eventDetailForm;
   public map: any;
   public center: LatLng = latLng(46.879966, -121.726909);
@@ -47,19 +47,19 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   };
 
   ngOnDestroy(): void {
-    this.eventSubscribler && this.eventSubscribler.unsubscribe();
+    this.usersubscribler && this.usersubscribler.unsubscribe();
   }
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
-              private eventsService: EventsService,
+              private usersService: UserService,
               private formBuilder: FormBuilder,
               private _ngZone: NgZone) {
-    this.eventSubscribler = this.router.events.subscribe((params) => {
+    this.usersubscribler = this.router.events.subscribe((params) => {
       // this.activeBlock = params['blockId'];
       if (params instanceof NavigationEnd) {
         let id = this.activatedRoute.snapshot.params['id'];
-        if(id){
+        if (id) {
           this.loadData(id);
         }
       }
@@ -182,17 +182,17 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   public loadData(eventId) {
-    this.eventsService.eventsGet(eventId)
-      .subscribe(({ Data: data }: any) => {
-        this.eventDetailForm.patchValue(data);
-        this.center = latLng(data.Latitude || null, data.Longitude || null);
-        this.createMarker({
-          lat: data.Latitude,
-          lng: data.Longitude
-        });
-      }, (err) => {
-
-      })
+    // this.usersService.usersGet(eventId)
+    //   .subscribe(({ Data: data }: any) => {
+    //     this.eventDetailForm.patchValue(data);
+    //     this.center = latLng(data.Latitude || null, data.Longitude || null);
+    //     this.createMarker({
+    //       lat: data.Latitude,
+    //       lng: data.Longitude
+    //     });
+    //   }, (err) => {
+    //
+    //   })
   }
 
   public createMarker({ lat, lng }) {
@@ -215,22 +215,22 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   public save() {
-    let model = this.eventDetailForm.getRawValue();
-    let subscription;
-    if (model.Id) {
-      subscription = this.eventsService.eventsUpdate(model.Id, model);
-    } else {
-      delete model.Id;
-      subscription = this.eventsService.eventsCreate(model);
-    }
-    subscription.subscribe((resp) => {
-      this.router.navigate(['auth', 'events']);
-    }, (err) => {
-    })
+    // let model = this.eventDetailForm.getRawValue();
+    // let subscription;
+    // if (model.Id) {
+    //   subscription = this.usersService.usersUpdate(model.Id, model);
+    // } else {
+    //   delete model.Id;
+    //   subscription = this.usersService.usersCreate(model);
+    // }
+    // subscription.subscribe((resp) => {
+    //   this.router.navigate(['auth', 'users']);
+    // }, (err) => {
+    // })
   }
 
   public cancel() {
-    this.router.navigate(['auth', 'events']);
+    this.router.navigate(['auth', 'users']);
   }
 
 

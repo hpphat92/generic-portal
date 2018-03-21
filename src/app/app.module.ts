@@ -11,10 +11,11 @@ import { SHARED_SERVICES } from './shared/services';
 import { AuthModule } from './auth/auth.module';
 import { ToastrModule } from 'ngx-toastr';
 import { UnauthModule } from './unAuth/unauth.module';
+import { ApiModule, BASE_PATH } from './shared/api';
 
 const routes: Route[] = [
-  {path: '', redirectTo: 'auth', pathMatch: 'full'},
-  {path: '**', redirectTo: 'auth'},
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '**', redirectTo: 'auth' },
 ];
 let domain = {
   toString: () => AppConstant.domain,
@@ -26,6 +27,7 @@ let domain = {
     AppComponent,
   ],
   imports: [
+    ApiModule,
     BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
@@ -40,6 +42,7 @@ let domain = {
     )
   ],
   providers: [
+    { provide: BASE_PATH, useValue: domain },
     ...SHARED_SERVICES
   ],
   bootstrap: [AppComponent]

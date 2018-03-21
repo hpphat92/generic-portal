@@ -11,11 +11,14 @@ import { CanAuthorized } from '../shared/guard/guard.module';
 import { HomeModule } from './home/home.module';
 import { HomeComponent } from './home/home.component';
 import { UserInfoResolve } from '../shared/guard/user-info.resolve';
-import { EventsModule } from "./events/events.module";
-import { EventsComponent } from "./events/events.component";
-import { EventDetailComponent } from "./events/event-detail/event-detail.component";
+import { EventsModule } from './events/events.module';
+import { EventsComponent } from './events/events.component';
+import { EventDetailComponent } from './events/event-detail/event-detail.component';
 import { GooglePlaceModule } from './google-place/google-place.module';
 import { GooglePlaceComponent } from './google-place/google-place.component';
+import { UsersComponent } from './users/users.component';
+import { UserDetailComponent } from './users/user-detail/user-detail.component';
+import { UsersModule } from './users/users.module';
 
 const routes: Routes = [
   {
@@ -30,22 +33,28 @@ const routes: Routes = [
         path: '', redirectTo: 'home', pathMatch: 'full',
       },
       {
-        path: 'home', component: HomeComponent, data: {title: 'Home'}
+        path: 'home', component: HomeComponent, data: { title: 'Home' }
       },
       {
-        path: 'events', component: EventsComponent, data: {title: 'Events'}
+        path: 'events', component: EventsComponent, data: { title: 'Events' }
       },
       {
-        path: 'google-place', component: GooglePlaceComponent, data: {title: 'Places'}
+        path: 'google-place', component: GooglePlaceComponent, data: { title: 'Places' }
       },
       {
-        path: 'events/new', component: EventDetailComponent, data: {title: 'Create Event'}
+        path: 'events/new', component: EventDetailComponent, data: { title: 'Create Event' }
       },
       {
-        path: 'event/:id', component: EventDetailComponent, data: {title: 'Event Detail'}
+        path: 'event/:id', component: EventDetailComponent, data: { title: 'Event Detail' }
       },
       {
-        path: 'profile', component: ProfileComponent, data: {title: 'Profile'}
+        path: 'users', component: UsersComponent, data: { title: 'Users' }
+      },
+      {
+        path: 'user', component: UserDetailComponent, data: { title: 'User Detail' }
+      },
+      {
+        path: 'profile', component: ProfileComponent, data: { title: 'Profile' }
       },
       {
         path: '**', redirectTo: 'home'
@@ -60,6 +69,7 @@ const routes: Routes = [
     SharedModule,
     HomeModule,
     EventsModule,
+    UsersModule,
     ProfileModule,
     GooglePlaceModule,
     RouterModule.forChild(routes),

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { EventsService } from "./events.service";
 import { MatDialog } from "@angular/material";
 import { ConfirmDialogComponent } from "../../shared/component/confirm-dialog/confirm-dialog.component";
+import { EventsService } from '../../shared/api';
 
 @Component({
   selector: 'events',
@@ -24,7 +24,7 @@ export class EventsComponent implements OnInit {
     }).afterClosed()
       .subscribe((resp) => {
         if (resp) {
-          this.eventsService.removeById(row.Id)
+          this.eventsService.eventsDelete(row.Id)
             .subscribe((resp) => {
               this.loadData();
             })
@@ -37,7 +37,7 @@ export class EventsComponent implements OnInit {
   }
 
   public loadData() {
-    this.eventsService.getEvents()
+    this.eventsService.eventsGetAll()
       .subscribe((resp: any) => {
         this.events = resp.Data;
       })

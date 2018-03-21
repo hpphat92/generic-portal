@@ -1,7 +1,12 @@
-:host {
+:host /deep/ {
+  max-height: 100%;
   display: block;
   .mat-dialog-content {
     padding: 0;
+    flex-grow: 1;
+    max-height: calc(80vh - 42px) !important;
+    display: flex;
+    flex-direction: column;
   }
   .close-button {
     position: absolute;
@@ -38,11 +43,12 @@
     padding: 5px 10px;
   }
   .photo-image {
-    width: 340px;
-    height: 380px;
+    width: 100%;
+    max-width: 100%;
+    height: 200px;
+    min-height: 200px;
     display: flex;
     justify-content: center;
-    margin-bottom: 10px;
     img {
       height: 100%;
       min-width: 100%;
@@ -62,7 +68,6 @@
     font-size: 16px;
     text-align: center;
     line-height: 1.5;
-    margin-top: -5px;
     a {
       color: #000;
       font-weight: bold;
@@ -72,25 +77,64 @@
     position: relative;
     top: 5px;
   }
-  .address {
-    padding: 0 8px;
-  }
-  .phone {
-    padding: 0 8px;
-  }
   .tag-list {
     line-height: 2;
     display: block;
     padding: 5px;
+    max-height: 10vh;
+    overflow: auto;
+    min-height: 32px;
     .label-tag {
       background: #ffe9c8;
-      padding: 5px;
+      padding: 3px 10px;
       display: inline-block;
       margin-right: 8px;
       color: #222;
       letter-spacing: 0.5px;
       font-weight: 600;
-      font-size: 10px;
+      font-size: 9px;
+      border-radius: 12px;
     }
+  }
+  mat-tab-group {
+    margin-top: 10px;
+    .mat-tab-label {
+      height: 32px !important;
+    }
+    .mat-tab-body-wrapper {
+      .mat-tab-body-content {
+      }
+    }
+  }
+  .content-info {
+    padding: 10px 5px;
+    .vote {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-right: 5px;
+      .rating {
+        display: flex;
+        align-items: baseline;
+        color: #ccc;
+        font-size: 12px;
+        .title-rating {
+          position: relative;
+          top: -1px;
+        }
+      }
+    }
+  }
+  .photo-list {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 10px;
+    .photo-item {
+      margin: 10px 0;
+    }
+  }
+  .no-photo-title {
+    padding: 10px;
   }
 }

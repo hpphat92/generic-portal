@@ -1,0 +1,29 @@
+:host {
+  .table-container {
+    margin-top: 10px;
+    table {
+      table-layout: fixed;
+      width: 100%;
+      border-collapse: collapse;
+      th {
+        line-height: 2.5;
+        font-weight: bold !important;
+      }
+      .image-cell {
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+        img {
+          height: 80px;
+          object-fit: contain;
+        }
+      }
+      .button-action {
+        button {
+          margin-top: 3px;
+        }
+      }
+
+    }
+  }
+}
