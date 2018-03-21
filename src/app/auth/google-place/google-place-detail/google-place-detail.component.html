@@ -1,4 +1,7 @@
 <h1 mat-dialog-title>{{place.name}}</h1>
+<div class="close-button" (click)="closeModel()">
+  <mat-icon>close</mat-icon>
+</div>
 <div mat-dialog-content>
   <div class="photo-image">
     <img [src]="photo" alt="" *ngIf="photo">
@@ -22,7 +25,4 @@
   <div class="tag-list">
     <span class="label-tag" *ngFor="let item of place.types">{{item}}</span>
   </div>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="closeModel()" tabindex="-1">Close</button>
 </div>

@@ -1,23 +1,56 @@
 :host {
+  display: block;
+  .mat-dialog-content {
+    padding: 0;
+  }
+  .close-button {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #a5a5a5;
+    color: #000;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 3px;
+    top: -10px;
+    right: -10px;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.9;
+    }
+    .mat-icon {
+      font-size: 15px;
+      width: 15px;
+      height: 15px;
+    }
+  }
   .mat-dialog-title {
     letter-spacing: 1px;
-    font-size: 21px;
+    font-size: 1em;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     text-align: center;
+    font-weight: bold;
+    margin: 0;
+    padding: 5px 10px;
   }
   .photo-image {
-    height: 250px;
+    width: 340px;
+    height: 380px;
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
     img {
       height: 100%;
+      min-width: 100%;
+      object-fit: cover;
     }
     .no-photo {
-      width: 340px;
-      height: 250px;
+      height: 100%;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -26,9 +59,9 @@
     }
   }
   .company-name {
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
-    line-height: 2;
+    line-height: 1.5;
     margin-top: -5px;
     a {
       color: #000;
@@ -40,24 +73,24 @@
     top: 5px;
   }
   .address {
-
+    padding: 0 8px;
   }
   .phone {
-
+    padding: 0 8px;
   }
   .tag-list {
     line-height: 2;
     display: block;
-    padding: 10px 0;
+    padding: 5px;
     .label-tag {
       background: #ffe9c8;
       padding: 5px;
       display: inline-block;
-      margin-right: 10px;
+      margin-right: 8px;
       color: #222;
       letter-spacing: 0.5px;
-      font-weight: 500;
-      font-size: 11px;
+      font-weight: 600;
+      font-size: 10px;
     }
   }
 }

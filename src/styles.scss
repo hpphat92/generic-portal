@@ -342,3 +342,15 @@ mat-form-field:not(.mat-form-field-invalid) {
 a:-webkit-any-link {
   color: $accent-color;
 }
+
+.place-detail-dlg {
+  max-width: unset !important;
+  position: relative !important;
+  mat-dialog-container {
+    padding: 0 !important;
+    overflow-x: hidden;
+    max-height: 80vh;
+    height: unset;
+    padding-bottom: 10px !important;
+  }
+}

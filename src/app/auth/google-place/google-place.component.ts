@@ -111,7 +111,7 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit {
       case '1':
         return this.userLocation;
       case '2':
-        return { latitude: formValue.Latitude, longitude: formValue.Longitude }
+        return { latitude: formValue.Latitude, longitude: formValue.Longitude };
       case '3':
         return this.addressLocation;
     }
@@ -153,8 +153,9 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit {
       .then((resp) => {
         const dialogRef = this.mdDialog.open(GooglePlaceDetailComponent, {
           data: resp,
-          // height: '350px',
-          // width: '750px',
+          width: '340px',
+          panelClass: 'place-detail-dlg',
+          closeOnNavigation: true,
         });
 
       })
