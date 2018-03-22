@@ -25,9 +25,14 @@ export class AuthComponent implements OnInit {
       href: '/auth/events',
     },
     {
-      title: 'Places',
+      title: 'Google Places Search',
       iconUrl: 'assets/images/laptop.svg',
       href: '/auth/google-place',
+    },
+    {
+      title: 'Saved Places',
+      iconUrl: 'assets/images/laptop.svg',
+      href: '/auth/saved-places',
     },
     {
       title: 'Users',

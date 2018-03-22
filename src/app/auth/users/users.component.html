@@ -6,7 +6,7 @@
     <table class="mat-table">
       <thead>
       <tr class="mat-header-row">
-        <th class="mat-cell mat-header-cell">Preview</th>
+        <th class="mat-cell mat-header-cell"></th>
         <th class="mat-cell mat-header-cell">Name</th>
         <th class="mat-cell mat-header-cell">Location</th>
         <th class="mat-cell mat-header-cell">Created Date</th>
@@ -17,15 +17,35 @@
       <tr *ngFor="let row of users" class="mat-row">
         <td class="mat-cell text-center">
           <div class="image-cell">
-            <img [src]="row.ImageUrl" alt="">
+            <img [src]="row.profilePictureUrl || '/assets/images/noavatar.jpg'" alt="">
           </div>
         </td>
-        <td class="mat-cell text-center">{{row.Title}}</td>
-        <td class="mat-cell text-center">
-          <div><b>Lat: </b>{{row.Latitude}}</div>
-          <div><b>Lon: </b>{{row.Longitude}}</div>
+        <td class="mat-cell">
+          <div class="name">
+            <b *ngIf="row.firstName || row.lastName">{{row.firstName}} {{row.lastName}}</b>
+            <b *ngIf="!(row.firstName || row.lastName)">{{row.email}}</b>
+            <a [href]="'mailto:'+row.email" *ngIf="row.email" target="_blank">
+              <img src="/assets/images/mail.png" alt="">
+            </a>
+          </div>
+          <div class="bio">
+            {{row.occupation}}
+          </div>
+          <div class="contacts">
+            <div class="email" *ngIf="row.email">{{row.email}}</div>
+            <a [href]="row.facebookLink" *ngIf="row.facebookLink" target="_blank">
+              <img src="/assets/images/facebook-icon.png" alt="">
+            </a>
+          </div>
+          <div class="mode-status">
+            {{row.moderationStatus}}
+          </div>
         </td>
-        <td class="mat-cell text-center">{{row.Date}}</td>
+        <td class="mat-cell text-center">
+          <div><b>Lat: </b>{{row.latitude}}</div>
+          <div><b>Lon: </b>{{row.longitude}}</div>
+        </td>
+        <td class="mat-cell text-center">{{row.createdAt}}</td>
         <td class="text-center button-action">
           <button [routerLink]="['/auth', 'event',row.Id]" mat-button color="primary" mat-raised-button="">
             Edit

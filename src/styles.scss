@@ -353,3 +353,29 @@ a:-webkit-any-link {
     height: unset;
   }
 }
+
+//Star Checkbox
+.star {
+  visibility: hidden;
+  font-size: 30px;
+  cursor: pointer;
+  color: #ff9800;
+  position: relative;
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  &:before {
+    content: "\2606";
+    position: absolute;
+    visibility: visible;
+    top: -100%;
+    left: -50%;
+  }
+  &:checked {
+    &:before {
+      content: "\2605";
+      position: absolute;
+    }
+  }
+}

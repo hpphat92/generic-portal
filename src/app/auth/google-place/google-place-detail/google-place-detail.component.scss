@@ -41,6 +41,13 @@
     font-weight: bold;
     margin: 0;
     padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .icon {
+      height: 30px;
+      margin-right: 5px;
+    }
   }
   .photo-image {
     width: 100%;

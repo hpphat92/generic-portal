@@ -15,7 +15,9 @@
         padding: 10px 0;
         img {
           height: 80px;
-          object-fit: contain;
+          object-fit: cover;
+          width: 80px;
+          border-radius: 81px;
         }
       }
       .button-action {
@@ -23,7 +25,26 @@
           margin-top: 3px;
         }
       }
-
+      .mat-cell {
+        .name {
+          img {
+            width: 20px;
+            height: 20px;
+          }
+        }
+        .bio {
+          font-size: 12px;
+          font-style: italic;
+          color: #777;
+        }
+        .contacts {
+          img {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
     }
   }
 }

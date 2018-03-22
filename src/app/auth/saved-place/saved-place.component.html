@@ -1,0 +1,60 @@
+<div class="page-layout blank p-24">
+  <h2>Saved Places</h2>
+</div>
+<div class="page-content">
+  <div class="table-container mat-elevation-z8">
+    <table class="mat-table">
+      <colgroup>
+        <col width="120">
+        <col width="450">
+        <col>
+        <col width="340">
+      </colgroup>
+      <thead>
+      <tr class="mat-header-row">
+        <th class="mat-cell mat-header-cell"></th>
+        <th class="mat-cell mat-header-cell">Name</th>
+        <th class="mat-cell mat-header-cell">Location</th>
+        <!--<th class="mat-cell mat-header-cell">Types</th>-->
+        <th class="mat-cell mat-header-cell"></th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let row of places">
+      <tr class="mat-row">
+        <td class="mat-cell image-cell">
+          <img [src]="row.ImageUrl || '/assets/images/noavatar.jpg'" alt="">
+        </td>
+        <td class="mat-cell place-cell">
+          <div class="place-name">
+            {{row.Name || row.Vicinity || row.Address}}
+          </div>
+          <div class="address">
+            {{row.Address}}
+          </div>
+          <div class="category-list">
+            <div class="category" *ngFor="let item of row.CategoriesListItems">
+              {{item}}
+            </div>
+          </div>
+        </td>
+        <td class="mat-cell text-center">{{row.Vicinity}}</td>
+        <td class="text-center button-action">
+          <button [routerLink]="['/auth', 'saved-place',row.Id]" mat-button color="primary" mat-raised-button="">
+            Edit
+          </button>
+          <button mat-button color="warn" mat-raised-button="" (click)="deleteSavedPlace(row)">
+            Delete
+          </button>
+        </td>
+      </tr>
+      </tbody>
+      <tbody class="no-data" *ngIf="!places?.length">
+      <tr>
+        <td colspan="3" class="text-center">
+          {{loading?'Searching...': 'No Places'}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -59,20 +59,32 @@
     Total results found: {{total}} place(s).
   </div>
   <div class="table-container mat-elevation-z8">
-    <mat-paginator [length]="total"
-                   [pageSize]="20"
-                   [pageIndex]="pageIndex"
-                   [hidePageSize]="true"
-                   (page)="changePage($event.pageIndex)">
-    </mat-paginator>
+    <div class="top-table">
+      <div class="button-action">
+        <button mat-button mat-raised-button color="primary" (click)="saveSelectedCheckingPlaces()"
+                [disabled]="savingCheckingPlaces || !listCheckingPlaces.length">{{savingCheckingPlaces? 'Saving':
+          'Save'}} Selected
+          Places ({{listCheckingPlaces.length || 0}})
+        </button>
+        <a mat-button [routerLink]="['/auth','saved-places']">Saved Places</a>
+      </div>
+      <mat-paginator [length]="total"
+                     [pageSize]="20"
+                     [pageIndex]="pageIndex"
+                     [hidePageSize]="true"
+                     (page)="changePage($event.pageIndex)">
+      </mat-paginator>
+    </div>
     <table class="mat-table">
       <colgroup>
+        <col width="40">
         <col>
         <col>
         <col width="150">
       </colgroup>
       <thead>
       <tr class="mat-header-row">
+        <th></th>
         <th class="mat-cell mat-header-cell">Name</th>
         <th class="mat-cell mat-header-cell">Location</th>
         <!--<th class="mat-cell mat-header-cell">Types</th>-->
@@ -81,6 +93,12 @@
       </thead>
       <tbody *ngFor="let row of places">
       <tr class="mat-row">
+        <td class="text-center" [attr.rowspan]="row.types.length?2:1">
+          <input #test class="star" [disabled]="row.disableChange" type="checkbox" [checked]="row.isChecked"
+                 (change)="toggleCheckbox($event, row)"
+                 title="bookmark page">
+          <!--<mat-checkbox (change)="checkChange(row.id)"></mat-checkbox>-->
+        </td>
         <td class="mat-cell place-name">{{row.name}}</td>
         <td class="mat-cell text-center" [attr.rowspan]="row.types.length?2:1">{{row.vicinity}}</td>
 
@@ -98,7 +116,7 @@
       </tbody>
       <tbody class="no-data" *ngIf="!places?.length">
       <tr>
-        <td colspan="3" class="text-center">
+        <td colspan="4" class="text-center">
           {{loading?'Searching...': 'No Places'}}
         </td>
       </tr>

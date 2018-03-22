@@ -1,4 +1,7 @@
-<h1 mat-dialog-title>{{place.name}}</h1>
+<h1 mat-dialog-title>
+  <img [src]="place.icon" *ngIf="place.icon" alt="" class="icon">
+  {{place.name}}
+</h1>
 <div class="close-button" (click)="closeModel()">
   <mat-icon>close</mat-icon>
 </div>

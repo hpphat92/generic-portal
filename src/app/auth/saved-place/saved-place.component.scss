@@ -50,14 +50,6 @@
   }
   .table-container {
     margin-top: 10px;
-    .top-table {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .button-action {
-        padding: 0 10px;
-      }
-    }
     table {
       table-layout: fixed;
       width: 100%;
@@ -95,10 +87,29 @@
       }
       .mat-cell {
         padding: 10px 0 10px 20px;
-        &.place-name {
-          padding-bottom: 0 !important;
-          font-weight: bold;
-          font-size: 16px;
+        &.place-cell {
+          .place-name {
+            padding-bottom: 0 !important;
+            font-weight: bold;
+            font-size: 16px;
+          }
+          .address {
+            line-height: 1.5;
+          }
+          .category-list {
+            margin-top: 3px;
+            .category {
+              background: #ffe9c8;
+              padding: 5px;
+              display: inline-block;
+              margin-right: 10px;
+              margin-bottom: 6px;
+              color: #222;
+              letter-spacing: 0.5px;
+              font-weight: 500;
+              font-size: 11px;
+            }
+          }
         }
         .label-tag {
           background: #ffe9c8;

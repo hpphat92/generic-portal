@@ -19,6 +19,10 @@ import { GooglePlaceComponent } from './google-place/google-place.component';
 import { UsersComponent } from './users/users.component';
 import { UserDetailComponent } from './users/user-detail/user-detail.component';
 import { UsersModule } from './users/users.module';
+import { SavedPlaceModule } from './saved-place/saved-place.module';
+import { SavedPlaceComponent } from './saved-place/saved-place.component';
+import { PendingChangesGuard } from '../shared/guard/can-deactive';
+import { SavedPlaceDetailComponent } from './saved-place/saved-place-detail/saved-place-detail.component';
 
 const routes: Routes = [
   {
@@ -39,7 +43,16 @@ const routes: Routes = [
         path: 'events', component: EventsComponent, data: { title: 'Events' }
       },
       {
-        path: 'google-place', component: GooglePlaceComponent, data: { title: 'Places' }
+        path: 'google-place',
+        component: GooglePlaceComponent,
+        data: { title: 'Google Places Search' },
+        canDeactivate: [PendingChangesGuard]
+      },
+      {
+        path: 'saved-places', component: SavedPlaceComponent, data: { title: 'Saved Places' }
+      },
+      {
+        path: 'saved-place/:id', component: SavedPlaceDetailComponent, data: { title: 'Saved Place Detail' }
       },
       {
         path: 'events/new', component: EventDetailComponent, data: { title: 'Create Event' }
@@ -72,6 +85,7 @@ const routes: Routes = [
     UsersModule,
     ProfileModule,
     GooglePlaceModule,
+    SavedPlaceModule,
     RouterModule.forChild(routes),
   ],
   providers: [],
