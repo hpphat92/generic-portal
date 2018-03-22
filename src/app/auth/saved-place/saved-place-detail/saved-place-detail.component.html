@@ -47,7 +47,7 @@
                [uploadInput]="uploadInput">
         <div class="image-uploader" *ngIf="!placeDetailFrm.controls['CustomImageUrl'].value">
           <mat-icon>add_a_photo</mat-icon>
-          Add Photo
+          Add Custom Photo
         </div>
         <img [src]="placeDetailFrm.controls['CustomImageUrl'].value"
              *ngIf="placeDetailFrm.controls['CustomImageUrl'].value" alt="">
@@ -55,19 +55,22 @@
     </div>
     <form name="placeDetailFrm" (submit)="save()" [formGroup]="placeDetailFrm" novalidate>
       <mat-form-field>
-        <mat-select placeholder="Categories" [multiple]="true" formControlName="CustomCaregoriesList">
+        <input matInput placeholder="Custom Name" formControlName="CustomName"/>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Custom Categories" [multiple]="true" formControlName="CustomCaregoriesList">
           <mat-option *ngFor="let item of placeTypes" [value]="item.id">{{item.value}}</mat-option>
         </mat-select>
       </mat-form-field>
       <div class="checkbox">
-        <mat-checkbox formControlName="CustomRecommended">Recommended</mat-checkbox>
+        <mat-checkbox formControlName="CustomRecommended">Custom Recommended</mat-checkbox>
       </div>
       <mat-form-field>
-        <textarea matInput name="Description" formControlName="CustomDescription" rows="8"
-                  placeholder="Description"></textarea>
+        <textarea matInput name="CustomDescription" formControlName="CustomDescription" rows="8"
+                  placeholder="Custom Description"></textarea>
       </mat-form-field>
       <div class="rating-field">
-        <div class="rating-title">Rating</div>
+        <div class="rating-title">Custom Rating</div>
         <rating formControlName="CustomRating"
                 [max]="5"
                 fullIcon="★"
@@ -77,7 +80,7 @@
                 [float]="true"></rating>
       </div>
       <div class="icon-uploader-field">
-        <div class="rating-title">Icon</div>
+        <div class="rating-title">Custom Icon</div>
         <div class="icon-url">
           <label class="image-url" [class.editable]="placeDetailFrm.controls['CustomIcon'].value">
             <input type="file" ngFileSelect #file4
@@ -92,11 +95,11 @@
           </label>
         </div>
       </div>
-      <div class="save-button">
-        <button mat-button="" mat-raised-button="" [disabled]="!placeDetailFrm.valid" color="primary" (click)="save()">Save
-        </button>
-        <button mat-button="" (click)="cancel()">Cancel</button>
-      </div>
+      <!--<div class="save-button">-->
+      <!--<button mat-button="" mat-raised-button="" [disabled]="!placeDetailFrm.valid" color="primary" (click)="save()">Save-->
+      <!--</button>-->
+      <!--<button mat-button="" (click)="cancel()">Cancel</button>-->
+      <!--</div>-->
     </form>
   </div>
 </div>

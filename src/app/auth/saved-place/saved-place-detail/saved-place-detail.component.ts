@@ -53,6 +53,8 @@ export class SavedPlaceDetailComponent implements OnInit, OnDestroy {
       }
     });
     this.placeDetailFrm = this.formBuilder.group({
+      Id: ['', []],
+      CustomName: ['', []],
       CustomRating: ['', []],
       CustomDescription: ['', []],
       CustomRecommended: ['', []],
@@ -69,6 +71,7 @@ export class SavedPlaceDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.subscription && this.subscription.unsubscribe();
   }
 
   public onFormChanged() {
@@ -128,11 +131,13 @@ export class SavedPlaceDetailComponent implements OnInit, OnDestroy {
   save() {
     let formValue = this.placeDetailFrm.getRawValue();
     formValue.CustomCaregoriesList = formValue.CustomCaregoriesList.length ? formValue.CustomCaregoriesList.join(',') : '';
-    formValue.IsUpsert = true;
-    formValue.Id = this.place.Id;
-    this.placesAdminService.placesAdminCreate(formValue)
+    let model = {
+      ...this.place,
+      ...formValue
+    }
+    this.placesAdminService.placesAdminUpdate(formValue.Id, model)
       .subscribe((resp) => {
-        this.router.navigate(['auth', 'saved-pages'])
+        this.router.navigate(['auth', 'saved-places']);
       })
   }
 

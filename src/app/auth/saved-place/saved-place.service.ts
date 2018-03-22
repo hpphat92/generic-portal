@@ -4,6 +4,7 @@ import AppConstant from '../../app.constant';
 import * as _ from 'lodash';
 import * as _config from '../../../config.json';
 import { MatPaginator } from '@angular/material';
+import appConstant from '../../app.constant';
 
 let config = _config as any;
 
@@ -52,7 +53,7 @@ export class SavedPlaceService {
 
   public getDetail(placeId) {
     let google = (window as any).google;
-    if(!this.service){
+    if (!this.service) {
       this.service = new google.maps.places.PlacesService(document.getElementById('map_null'));
     }
     return new Promise((resolve) => {
@@ -63,5 +64,7 @@ export class SavedPlaceService {
       })
     })
   }
+
+
 }
 
