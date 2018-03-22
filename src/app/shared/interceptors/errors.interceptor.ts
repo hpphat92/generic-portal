@@ -7,7 +7,7 @@ import { HttpResponse } from 'selenium-webdriver/http';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/mergeMap';
-import 'rxjs/observable/of';
+import 'rxjs/add/observable/empty';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
@@ -44,8 +44,8 @@ export class ErrorsInterceptor implements HttpInterceptor {
         if (err.error && err.error.message) {
           this.toastrService.error(err.error.message, 'Error');
         }
-        return (Observable as any).of([]);
-        // throw err;
+        // return Observable.empty<any>();
+        throw err;
       }
     });
   }

@@ -37,7 +37,7 @@
     }
     .auth-sidenav {
       width: $sidebar-nav-width;
-      background: linear-gradient(0deg, #4A5A6C 0%, #474C53 0%, #3F454C 0%, #303841 100%);
+      background: $sidebar-main-color;
       .sidebar-logo {
         height: 60px;
         display: flex;
@@ -61,7 +61,7 @@
           -ms-user-select: none;
           user-select: none;
           &.active {
-            background: #414A54;
+            background: $menu-active-color;
           }
           .menu-icon {
             text-align: center;
