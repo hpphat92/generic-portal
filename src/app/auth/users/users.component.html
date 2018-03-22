@@ -10,7 +10,7 @@
         <th class="mat-cell mat-header-cell">Name</th>
         <th class="mat-cell mat-header-cell">Location</th>
         <th class="mat-cell mat-header-cell">Created Date</th>
-        <th class="mat-cell mat-header-cell"></th>
+        <!--<th class="mat-cell mat-header-cell"></th>-->
       </tr>
       </thead>
       <tbody>
@@ -46,17 +46,17 @@
           <div><b>Lon: </b>{{row.longitude}}</div>
         </td>
         <td class="mat-cell text-center">{{row.createdAt}}</td>
-        <td class="text-center button-action">
-          <button [routerLink]="['/auth', 'event',row.Id]" mat-button color="primary" mat-raised-button="">
-            Edit
-          </button>
-          <button mat-button color="warn" mat-raised-button="" (click)="confirmRemoveRow(row)">
-            Delete
-          </button>
-        </td>
+        <!--<td class="text-center button-action">-->
+          <!--<button [routerLink]="['/auth', 'event',row.Id]" mat-button color="primary" mat-raised-button="">-->
+            <!--Edit-->
+          <!--</button>-->
+          <!--<button mat-button color="warn" mat-raised-button="" (click)="confirmRemoveRow(row)">-->
+            <!--Delete-->
+          <!--</button>-->
+        <!--</td>-->
       </tr>
       <tr *ngIf="!users?.length">
-        <td colspan="5" class="text-center">No users</td>
+        <td colspan="4" class="text-center">No users</td>
       </tr>
       </tbody>
     </table>
