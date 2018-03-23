@@ -4,11 +4,18 @@
 <div class="page-content">
   <div class="table-container mat-elevation-z8">
     <table class="mat-table">
+      <colgroup>
+        <col width="80">
+        <col width="300">
+        <col width="50">
+        <col width="120">
+      </colgroup>
       <thead>
       <tr class="mat-header-row">
         <th class="mat-cell mat-header-cell"></th>
         <th class="mat-cell mat-header-cell">Name</th>
-        <th class="mat-cell mat-header-cell">Location</th>
+        <th class="mat-cell mat-header-cell"></th>
+        <!--<th class="mat-cell mat-header-cell">Location</th>-->
         <th class="mat-cell mat-header-cell">Created Date</th>
         <!--<th class="mat-cell mat-header-cell"></th>-->
       </tr>
@@ -19,44 +26,52 @@
           <div class="image-cell">
             <img [src]="row.profilePictureUrl || '/assets/images/noavatar.jpg'" alt="">
           </div>
+          <div class="mail" *ngIf="row.email">
+            <a [href]="'mailto:'+row.email" target="_blank">
+              <img src="/assets/images/mail.png" alt="">
+            </a>
+          </div>
         </td>
         <td class="mat-cell">
           <div class="name">
-            <b *ngIf="row.firstName || row.lastName">{{row.firstName}} {{row.lastName}}</b>
+            <b class="header-name" *ngIf="row.firstName || row.lastName">{{row.firstName}} {{row.lastName}}</b>
             <b *ngIf="!(row.firstName || row.lastName)">{{row.email}}</b>
-            <a [href]="'mailto:'+row.email" *ngIf="row.email" target="_blank">
-              <img src="/assets/images/mail.png" alt="">
-            </a>
+
+          </div>
+          <div class="contacts">
+            <div class="email" *ngIf="row.email">{{row.email}}</div>
           </div>
           <div class="bio">
             {{row.occupation}}
           </div>
-          <div class="contacts">
-            <div class="email" *ngIf="row.email">{{row.email}}</div>
-            <a [href]="row.facebookLink" *ngIf="row.facebookLink" target="_blank">
-              <img src="/assets/images/facebook-icon.png" alt="">
-            </a>
+          <div class="tag-item mode-status" *ngIf="row.moderationStatus">
+            {{row.moderationStatus?.split('_').join(' ')}}
           </div>
-          <div class="mode-status">
-            {{row.moderationStatus}}
+          <div class="tag-item profile-completed" *ngIf="row.profileComplete">
+            Profile Completed
           </div>
         </td>
-        <td class="mat-cell text-center">
-          <div><b>Lat: </b>{{row.latitude}}</div>
-          <div><b>Lon: </b>{{row.longitude}}</div>
+        <td>
+          <a [href]="row.facebookLink" *ngIf="row.facebookLink" target="_blank">
+            <img src="/assets/images/facebook-icon.png" alt="">
+          </a>
         </td>
+        <!--<td class="mat-cell text-center">-->
+        <!--<div><b>Lat: </b>{{row.latitude}}</div>-->
+        <!--<div><b>Lon: </b>{{row.longitude}}</div>-->
+        <!--</td>-->
         <td class="mat-cell text-center">{{row.createdAt}}</td>
         <!--<td class="text-center button-action">-->
-          <!--<button [routerLink]="['/auth', 'event',row.Id]" mat-button color="primary" mat-raised-button="">-->
-            <!--Edit-->
-          <!--</button>-->
-          <!--<button mat-button color="warn" mat-raised-button="" (click)="confirmRemoveRow(row)">-->
-            <!--Delete-->
-          <!--</button>-->
+        <!--<button [routerLink]="['/auth', 'event',row.Id]" mat-button color="primary" mat-raised-button="">-->
+        <!--Edit-->
+        <!--</button>-->
+        <!--<button mat-button color="warn" mat-raised-button="" (click)="confirmRemoveRow(row)">-->
+        <!--Delete-->
+        <!--</button>-->
         <!--</td>-->
       </tr>
       <tr *ngIf="!users?.length">
-        <td colspan="4" class="text-center">No users</td>
+        <td colspan="3" class="text-center">No users</td>
       </tr>
       </tbody>
     </table>
