@@ -64,7 +64,7 @@ const routes: Routes = [
         path: 'users', component: UsersComponent, data: { title: 'Users' }
       },
       {
-        path: 'user', component: UserDetailComponent, data: { title: 'User Detail' }
+        path: 'user/:id', component: UserDetailComponent, data: { title: 'User Detail' }
       },
       {
         path: 'profile', component: ProfileComponent, data: { title: 'Profile' }

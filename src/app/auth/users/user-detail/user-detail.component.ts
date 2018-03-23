@@ -1,17 +1,19 @@
-import { Component, EventEmitter, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { UserService } from '../../../shared/api';
+import { AuthService } from '../../../shared/services/auth';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { FormBuilder, Validators } from '@angular/forms';
-import { icon, LatLng, latLng, Marker, marker, tileLayer } from 'leaflet';
+import { icon, LatLng, latLng, marker, Marker, tileLayer } from 'leaflet';
+import { GeoSearchControl, GoogleProvider } from 'leaflet-geosearch';
 import * as iconUrl from 'leaflet/dist/images/marker-icon.png';
 import * as shadowUrl from 'leaflet/dist/images/marker-shadow.png';
-import { UploadInput, UploadOutput } from 'ngx-uploader';
-import * as L from 'leaflet';
-import { GeoSearchControl, GoogleProvider } from 'leaflet-geosearch';
 import * as _config from '../../../../config.json';
-import { UserService } from '../../../shared/api';
 
 let config = _config as any;
+
+import * as L from 'leaflet';
 
 @Component({
   selector: 'user-detail',
@@ -20,25 +22,95 @@ let config = _config as any;
 })
 export class UserDetailComponent implements OnInit, OnDestroy {
 
-  private usersubscribler: Subscription;
-  public eventDetailForm;
+  private subscription: Subscription;
+  public user = {};
+  public userForm;
+  public userFormErrors: any = {
+    firstName: {},
+    lastName: {},
+    email: {},
+    dob: {},
+    gender: {},
+  };
+
+  constructor(public usersService: UserService,
+              public mdDialog: MatDialog,
+              private router: Router,
+              private formBuilder: FormBuilder,
+              private activatedRoute: ActivatedRoute,
+              public authService: AuthService,
+              private ngZone: NgZone) {
+    this.subscription = this.router.events.subscribe((params) => {
+      // this.activeBlock = params['blockId'];
+      if (params instanceof NavigationEnd) {
+        let id = this.activatedRoute.snapshot.params['id'];
+        if (id) {
+          this.getUserDetail(id);
+        }
+      }
+    });
+    this.userForm = this.formBuilder.group({
+      profilePictureUrl: [''],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      dob: [''],
+      gender: [''],
+      address: [''],
+      occupation: [''],
+      bio: [''],
+      outsideInterestsAsString: [''],
+    });
+    this.userForm.valueChanges.subscribe(() => {
+      this.onFormChanged();
+    })
+  }
+
+  ngOnInit(): void {
+  }
+
+  public getUserDetail(id) {
+    this.usersService.userGetUser(id, '2.0.0', `${this.authService.userToken.accessToken}`)
+      .subscribe((resp: any) => {
+        this.user = resp;
+        resp.outsideInterestsAsString = resp.outsideInterestsAsString ? JSON.parse(resp.outsideInterestsAsString) : [];
+        this.userForm.patchValue(resp);
+        this.center = latLng(resp.latitude || null, resp.longitude || null);
+        this.createMarker({
+          lat: resp.latitude,
+          lng: resp.longitude
+        });
+      })
+  }
+
+  ngOnDestroy(): void {
+    this.subscription && this.subscription.unsubscribe();
+  }
+
+  public onFormChanged() {
+    for (const field in this.userFormErrors) {
+      if (!this.userFormErrors.hasOwnProperty(field)) {
+        continue;
+      }
+
+      // Clear previous errors
+      this.userFormErrors[field] = {};
+
+      // Get the control
+      const control = this.userForm.get(field);
+
+      if (control && control.dirty && !control.valid) {
+        this.userFormErrors[field] = control.errors;
+      }
+    }
+  }
+
+
   public map: any;
   public center: LatLng = latLng(46.879966, -121.726909);
   public newMarker: Marker;
-  public eventDetailErrors = {
-    Title: {},
-    ImageUrl: {},
-    IconUrl: {},
-    Latitude: {},
-    Longitude: {},
-    PhoneNumber: {},
-    Website: {},
-    Address: {},
-    OpeningHours: {},
-    Description: {},
-  };
   public layers = [];
-  options = {
+  public options = {
     layers: [
       tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
     ],
@@ -46,78 +118,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     center: latLng(46.879966, -121.726909)
   };
 
-  ngOnDestroy(): void {
-    this.usersubscribler && this.usersubscribler.unsubscribe();
-  }
-
-  constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private usersService: UserService,
-              private formBuilder: FormBuilder,
-              private _ngZone: NgZone) {
-    this.usersubscribler = this.router.events.subscribe((params) => {
-      // this.activeBlock = params['blockId'];
-      if (params instanceof NavigationEnd) {
-        let id = this.activatedRoute.snapshot.params['id'];
-        if (id) {
-          this.loadData(id);
-        }
-      }
-    });
-    this.eventDetailForm = this.formBuilder.group({
-      Id: [''],
-      Title: ['', [Validators.required]],
-      ImageUrl: ['', [Validators.required]],
-      IconUrl: ['', [Validators.required]],
-      // IconUrl: ['ABC'],
-      Latitude: ['', [Validators.required, Validators.min(-90), Validators.max(90)]],
-      Longitude: ['', [Validators.required, Validators.min(-180), Validators.max(180)]],
-      PhoneNumber: ['', [Validators.required]],
-      Website: [''],
-      Address: [''],
-      OpeningHours: ['', [Validators.required]],
-      Description: ['', [Validators.required]],
-    });
-    this.eventDetailForm.valueChanges.subscribe(() => {
-      this.onFormChanged();
-    })
-  }
-
-  public onFormChanged() {
-    for (const field in this.eventDetailErrors) {
-      if (!this.eventDetailErrors.hasOwnProperty(field)) {
-        continue;
-      }
-
-      // Clear previous errors
-      this.eventDetailErrors[field] = {};
-
-      // Get the control
-      const control = this.eventDetailForm.get(field);
-
-      if (control && control.dirty && !control.valid) {
-        this.eventDetailErrors[field] = control.errors;
-      }
-    }
-  }
-
-  public ngOnInit(): void {
-
-  }
-
-  onLocationInputChanged() {
-    if (this.eventDetailForm.controls['Longitude'].invalid || this.eventDetailForm.controls['Latitude'].invalid) {
-      // do no update
-      return;
-    }
-    if (this.map) {
-      let { Latitude, Longitude } = this.eventDetailForm.getRawValue();
-      this.setMarkerAtPos(this.map, { lat: Latitude, lng: Longitude });
-      this.center = latLng(Latitude || null, Longitude || null);
-    }
-  }
-
-  mapReady(map: L.Map) {
+  public mapReady(map: L.Map) {
     this.map = map; // Set for further using
     const provider = new GoogleProvider({
       params: {
@@ -153,46 +154,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
       }
       let { latlng } = e;
       this.setMarkerAtPos(map, latlng);
-      // if (this.newMarker) {
-      //   this.newMarker.setLatLng(latlng);
-      // } else {
-      //   map.addLayer(this.createMarker(latlng));
-      // }
-      // this._ngZone.runOutsideAngular(() => {
-      //   let {lat: Latitude, lng: Longitude} = latlng;
-      //   this.eventDetailForm.patchValue({Latitude, Longitude});
-      //   this._ngZone.run(() => {
-      //   });
-      // });
     })
-  }
-
-  public setMarkerAtPos(map, latlng) {
-    if (this.newMarker) {
-      this.newMarker.setLatLng(latlng);
-    } else {
-      map.addLayer(this.createMarker(latlng));
-    }
-    this._ngZone.runOutsideAngular(() => {
-      let { lat: Latitude, lng: Longitude } = latlng;
-      this.eventDetailForm.patchValue({ Latitude, Longitude });
-      this._ngZone.run(() => {
-      });
-    });
-  }
-
-  public loadData(eventId) {
-    // this.usersService.usersGet(eventId)
-    //   .subscribe(({ Data: data }: any) => {
-    //     this.eventDetailForm.patchValue(data);
-    //     this.center = latLng(data.Latitude || null, data.Longitude || null);
-    //     this.createMarker({
-    //       lat: data.Latitude,
-    //       lng: data.Longitude
-    //     });
-    //   }, (err) => {
-    //
-    //   })
   }
 
   public createMarker({ lat, lng }) {
@@ -209,53 +171,39 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     this.layers.push(this.newMarker);
     this.newMarker.on('dragend', () => {
       let { lat: Latitude, lng: Longitude } = this.newMarker.getLatLng();
-      this.eventDetailForm.patchValue({ Latitude, Longitude });
+      this.userForm.patchValue({ Latitude, Longitude });
     });
     return this.newMarker;
   }
 
+  public setMarkerAtPos(map, latlng) {
+    if (this.newMarker) {
+      this.newMarker.setLatLng(latlng);
+    } else {
+      map.addLayer(this.createMarker(latlng));
+    }
+    this.ngZone.runOutsideAngular(() => {
+      let { lat: Latitude, lng: Longitude } = latlng;
+      this.userForm.patchValue({ Latitude, Longitude });
+      this.ngZone.run(() => {
+      });
+    });
+  }
+
   public save() {
-    // let model = this.eventDetailForm.getRawValue();
-    // let subscription;
-    // if (model.Id) {
-    //   subscription = this.usersService.usersUpdate(model.Id, model);
-    // } else {
-    //   delete model.Id;
-    //   subscription = this.usersService.usersCreate(model);
-    // }
-    // subscription.subscribe((resp) => {
-    //   this.router.navigate(['auth', 'users']);
-    // }, (err) => {
-    // })
+    let model = {
+      ...this.user,
+      ...this.userForm.getRawValue()
+    };
+    debugger;
+    this.usersService.userPatchUser(model.id, model, '2.0.0', `${this.authService.userToken.accessToken}`)
+      .subscribe((resp) => {
+        this.router.navigate(['auth', 'users']);
+      }, (err) => {
+      })
   }
 
   public cancel() {
     this.router.navigate(['auth', 'users']);
-  }
-
-
-  // File
-  public uploadInput: EventEmitter<UploadInput> = new EventEmitter<UploadInput>();
-
-  public onUploadOutput(output: UploadOutput, file: any, field: string): any {
-    switch (output.type) {
-      case 'allAddedToQueue':
-        // uncomment this if you want to auto upload files when added
-        const event: UploadInput = {
-          type: 'uploadAll',
-          url: 'https://trabbleclientportalapi.azurewebsites.net/api/files',
-          method: 'POST',
-          headers: { Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VySWQiOiIzZjc3MGY3OGM2ODQ0NDFhOTNlYzJmMzNkMTEwOWM4ZSIsIkV4cGlyZWRJblV0YyI6IjIwMTgtMDItMDZUMTI6NTk6MTUuODA0NTY5OVoifQ.Xj34mCYnr1ZG2hhYNm2XDQ64dlYFrv8mdR0m_di45h8' }
-        };
-        if (file.value) {
-          this.uploadInput.emit(event);
-        }
-        break;
-      case 'done':
-        this.eventDetailForm.patchValue({
-          [field]: output.file.response.data.url
-        });
-        break;
-    }
   }
 }
