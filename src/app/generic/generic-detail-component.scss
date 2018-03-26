@@ -2,9 +2,10 @@
   .page-layout {
     display: flex;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 20px 0 0;
     min-height: 50px;
     max-height: 50px;
+    text-transform: capitalize;
   }
   .save-button {
     margin-top: 10px;
