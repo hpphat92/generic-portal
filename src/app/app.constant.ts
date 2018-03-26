@@ -30,17 +30,26 @@ export const moduleConfig: GenericModuleConfig[] = [
   {
     isAuth: true,
     moduleName: 'place',
+    moduleIconUrl: 'https://image.flaticon.com/icons/svg/19/19985.svg',
     pageTitle: 'Places',
     path: 'sample-places',
     model: {
       'Name': {
+        displayOrder: 2,
       },
+      'ImageUrl': {
+        type: 'photo',
+        displayName: 'Preview',
+        displayOrder: 1
+      }
     }
   },
   {
     isAuth: true,
     moduleName: 'item',
+    moduleIconUrl: '',
     pageTitle: 'Items',
+    path: 'test-items',
     model: {
       'text': {
         displayName: 'Name',
@@ -48,6 +57,13 @@ export const moduleConfig: GenericModuleConfig[] = [
         readOnly: false,
         displayOrder: 1
       },
+      // 'gender': {
+      //   displayName: 'Gender',
+      //   type: 'dropdown',
+      //   sourceData: [{ value: 0, text: 'Male' }, { value: 1, text: 'Female' }],
+      //   readOnly: false,
+      //   displayOrder: 1
+      // },
       'description': {
         displayName: 'Description',
         type: 'text',

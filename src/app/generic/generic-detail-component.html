@@ -8,11 +8,24 @@
 </div>
 <div class="page-container">
   <form name="detailForm" [formGroup]="form" novalidate (submit)="save()">
-    <mat-form-field *ngFor="let col of columns">
-      <input matInput [placeholder]="col[1].displayName || col[0]" [formControlName]="col[0]">
-      <mat-error *ngIf="formError[col[0]]?.required">
-        {{col[1].displayName || col[0]}} is required
-      </mat-error>
-    </mat-form-field>
+    <ng-template ngFor let-col [ngForOf]="columns">
+      <mat-form-field>
+        <div [ngSwitch]="col[1].type">
+          <ng-template ngSwitchCase="dropdown">
+            <mat-select [placeholder]="col[1].displayName || col[0]" [formControlName]="col[0]">
+              <mat-option value="">Unknown</mat-option>
+              <mat-option *ngFor="let op of col[1].sourceData" [value]="op.value">{{op.text}}</mat-option>
+            </mat-select>
+          </ng-template>
+          <ng-template ngSwitchDefault>
+            <input matInput [placeholder]="col[1].displayName || col[0]" [formControlName]="col[0]">
+          </ng-template>
+        </div>
+        <mat-error *ngIf="formError[col[0]]?.required">
+          {{col[1].displayName || col[0]}} is required
+        </mat-error>
+      </mat-form-field>
+    </ng-template>
+
   </form>
 </div>

@@ -1,5 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import * as _config from '../../config.json';
+import { GenericService } from '../generic';
+import * as _ from 'lodash';
 
 let config = _config as any;
 const SMALL_WiDTH_BREAKPOINT = 768;
@@ -39,16 +41,13 @@ export class AuthComponent implements OnInit {
       iconUrl: 'assets/images/chat.svg',
       href: '/auth/users',
     },
-    {
-      title: 'Items',
-      iconUrl: 'assets/images/chat.svg',
-      href: '/auth/item/all',
-    },
-    {
-      title: 'Event New',
-      iconUrl: 'assets/images/chat.svg',
-      href: '/auth/sample-places/all',
-    },
+    ..._.map(GenericService.config, (config) => {
+      return {
+        title: config.pageTitle || config.moduleName,
+        href: `${config.isAuth ? '/auth/' : '/'}${config.path || config.moduleName}/all`,
+        iconUrl: config.moduleIconUrl || 'assets/images/chat.svg'
+      }
+    })
   ];
 
   constructor(private zone: NgZone) {
