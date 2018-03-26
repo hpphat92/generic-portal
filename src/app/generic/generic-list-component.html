@@ -1,0 +1,66 @@
+<div class="page-layout blank p-24">
+  <h2>{{config.pageTitle}}</h2>
+</div>
+<div class="page-content">
+  <button class="button-create" mat-button mat-raised-button [routerLink]="['/auth', (config.path || config.moduleName),'new']">
+    <mat-icon>create</mat-icon>
+    Create {{config.moduleName}}
+  </button>
+
+  <div class="table-container mat-elevation-z8">
+    <table class="mat-table">
+      <thead>
+      <tr class="mat-header-row">
+        <th class="mat-cell mat-header-cell" *ngFor="let col of columns">
+          {{col[1].displayName || col[0]}}
+        </th>
+        <th></th>
+        <!--<th class="mat-cell mat-header-cell">Preview</th>-->
+        <!--<th class="mat-cell mat-header-cell">Name</th>-->
+        <!--<th class="mat-cell mat-header-cell">Location</th>-->
+        <!--<th class="mat-cell mat-header-cell">Created Date</th>-->
+        <!--<th class="mat-cell mat-header-cell"></th>-->
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let row of rows" class="mat-row">
+        <td class="mat-cell text-center" *ngFor="let col of columns">
+          <div [ngSwitch]="col[1].type">
+            <div *ngSwitchCase="'date'">
+              {{row[col[0]] | date: 'short'}}
+            </div>
+            <div *ngSwitchCase="'photo'">
+              <img [src]="row[col[0]]" alt="">
+            </div>
+            <div *ngSwitchDefault>
+              {{row[col[0]]}}
+            </div>
+          </div>
+        </td>
+        <!--<td class="mat-cell text-center">-->
+        <!--<div class="image-cell">-->
+        <!--<img [src]="row.ImageUrl" alt="">-->
+        <!--</div>-->
+        <!--</td>-->
+        <!--<td class="mat-cell text-center">{{row.Title}}</td>-->
+        <!--<td class="mat-cell text-center">-->
+        <!--<div><b>Lat: </b>{{row.Latitude}}</div>-->
+        <!--<div><b>Lon: </b>{{row.Longitude}}</div>-->
+        <!--</td>-->
+        <!--<td class="mat-cell text-center">{{row.Date}}</td>-->
+        <td class="text-center button-action">
+          <button [routerLink]="['/auth', (config.path || config.moduleName),row.id]" mat-button color="primary" mat-raised-button="">
+            Edit
+          </button>
+          <button mat-button color="warn" mat-raised-button="" (click)="confirmRemoveRow(row)">
+            Delete
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="!rows?.length">
+        <td [attr.colspan]="columns.length+1" class="text-center">No {{config.moduleName}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

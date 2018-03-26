@@ -1,0 +1,35 @@
+:host {
+  .page-content {
+    .button-create {
+      text-transform: capitalize;
+    }
+  }
+  .table-container {
+    margin-top: 10px;
+    table {
+      table-layout: fixed;
+      width: 100%;
+      border-collapse: collapse;
+      th {
+        line-height: 2.5;
+        font-weight: bold !important;
+      }
+      tbody {
+        tr {
+          line-height: 3;
+          td {
+            .button-action {
+              button {
+                margin-top: 3px;
+              }
+            }
+            img {
+              max-height: 80px;
+            }
+          }
+        }
+      }
+
+    }
+  }
+}

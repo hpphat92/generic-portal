@@ -1,0 +1,18 @@
+<div class="page-layout blank p-24">
+  <h2>{{config.moduleName}} {{onDetail?'Detail':'Create'}}</h2>
+  <div class="save-button">
+    <button mat-button="" mat-raised-button="" [disabled]="!form.valid" color="primary" (click)="save()">Save
+    </button>
+    <button mat-button="" (click)="cancel()">Cancel</button>
+  </div>
+</div>
+<div class="page-container">
+  <form name="detailForm" [formGroup]="form" novalidate (submit)="save()">
+    <mat-form-field *ngFor="let col of columns">
+      <input matInput [placeholder]="col[1].displayName || col[0]" [formControlName]="col[0]">
+      <mat-error *ngIf="formError[col[0]]?.required">
+        {{col[1].displayName || col[0]}} is required
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>

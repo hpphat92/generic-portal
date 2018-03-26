@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth';
 import { Observable, ObservableInput } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { HttpResponse } from 'selenium-webdriver/http';
+import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/mergeMap';

@@ -39,6 +39,16 @@ export class AuthComponent implements OnInit {
       iconUrl: 'assets/images/chat.svg',
       href: '/auth/users',
     },
+    {
+      title: 'Items',
+      iconUrl: 'assets/images/chat.svg',
+      href: '/auth/item/all',
+    },
+    {
+      title: 'Event New',
+      iconUrl: 'assets/images/chat.svg',
+      href: '/auth/sample-places/all',
+    },
   ];
 
   constructor(private zone: NgZone) {

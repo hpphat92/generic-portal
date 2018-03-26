@@ -195,7 +195,6 @@ export class UserDetailComponent implements OnInit, OnDestroy {
       ...this.user,
       ...this.userForm.getRawValue()
     };
-    debugger;
     this.usersService.userPatchUser(model.id, model, '2.0.0', `${this.authService.userToken.accessToken}`)
       .subscribe((resp) => {
         this.router.navigate(['auth', 'users']);
