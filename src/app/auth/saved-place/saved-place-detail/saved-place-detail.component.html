@@ -1,7 +1,7 @@
 <div class="page-layout blank p-24">
   <h2 class="title-page">Saved Place Detail</h2>
   <div class="save-button">
-    <button mat-button="" mat-raised-button="" [disabled]="!placeDetailFrm.valid" color="primary" (click)="save()">Save
+    <button mat-button="" mat-raised-button="" [disabled]="!frm?.valid" color="primary" (click)="save()">Save
     </button>
     <button mat-button="" (click)="cancel()">Cancel</button>
   </div>
@@ -39,7 +39,7 @@
       </div>
     </div>
   </div>
-  <form  name="placeDetailFrm" (submit)="save()" [formGroup]="placeDetailFrm" novalidate class="right-panel-edit">
+  <form  name="frm" (submit)="save()" [formGroup]="frm" novalidate class="right-panel-edit">
     <div class="image-header-url">
       <image-uploader formControlName="CustomImageUrl"></image-uploader>
     </div>
@@ -76,7 +76,7 @@
         </div>
       </div>
       <!--<div class="save-button">-->
-      <!--<button mat-button="" mat-raised-button="" [disabled]="!placeDetailFrm.valid" color="primary" (click)="save()">Save-->
+      <!--<button mat-button="" mat-raised-button="" [disabled]="!frm.valid" color="primary" (click)="save()">Save-->
       <!--</button>-->
       <!--<button mat-button="" (click)="cancel()">Cancel</button>-->
       <!--</div>-->

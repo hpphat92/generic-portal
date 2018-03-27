@@ -4,7 +4,7 @@ import { UserService } from '../../../shared/api';
 import { AuthService } from '../../../shared/services/auth';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { icon, LatLng, latLng, marker, Marker, tileLayer } from 'leaflet';
 import { GeoSearchControl, GoogleProvider } from 'leaflet-geosearch';
 import * as iconUrl from 'leaflet/dist/images/marker-icon.png';
@@ -14,23 +14,36 @@ import * as _config from '../../../../config.json';
 let config = _config as any;
 
 import * as L from 'leaflet';
+import * as _ from 'lodash';
+import { BaseForm } from '../../../shared/form';
 
 @Component({
   selector: 'user-detail',
   templateUrl: './user-detail.component.html',
   styleUrls: ['./user-detail.component.scss'],
 })
-export class UserDetailComponent implements OnInit, OnDestroy {
+export class UserDetailComponent extends BaseForm implements OnInit, OnDestroy {
 
   private subscription: Subscription;
   public user = {};
-  public userForm;
-  public userFormErrors: any = {
-    firstName: {},
-    lastName: {},
-    email: {},
-    dob: {},
-    gender: {},
+  public formErrors: any = {
+    firstName: {} as any,
+    lastName: {} as any,
+    email: {} as any,
+    dob: {} as any,
+    gender: {} as any,
+  };
+  public controlConfig = {
+    profilePictureUrl: new FormControl(''),
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required]),
+    dob: new FormControl(''),
+    gender: new FormControl(''),
+    address: new FormControl(''),
+    occupation: new FormControl(''),
+    bio: new FormControl(''),
+    outsideInterestsAsString: new FormControl(''),
   };
 
   constructor(public usersService: UserService,
@@ -40,6 +53,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute,
               public authService: AuthService,
               private ngZone: NgZone) {
+    super();
     this.subscription = this.router.events.subscribe((params) => {
       // this.activeBlock = params['blockId'];
       if (params instanceof NavigationEnd) {
@@ -49,24 +63,10 @@ export class UserDetailComponent implements OnInit, OnDestroy {
         }
       }
     });
-    this.userForm = this.formBuilder.group({
-      profilePictureUrl: [''],
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      dob: [''],
-      gender: [''],
-      address: [''],
-      occupation: [''],
-      bio: [''],
-      outsideInterestsAsString: [''],
-    });
-    this.userForm.valueChanges.subscribe(() => {
-      this.onFormChanged();
-    })
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
   }
 
   public getUserDetail(id) {
@@ -74,7 +74,10 @@ export class UserDetailComponent implements OnInit, OnDestroy {
       .subscribe((resp: any) => {
         this.user = resp;
         resp.outsideInterestsAsString = resp.outsideInterestsAsString ? JSON.parse(resp.outsideInterestsAsString) : [];
-        this.userForm.patchValue(resp);
+        if (resp.outsideInterestsAsString.length && resp.outsideInterestsAsString[0].Title) {
+          resp.outsideInterestsAsString = _.map(resp.outsideInterestsAsString, 'Title');
+        }
+        this.frm.patchValue(resp);
         this.center = latLng(resp.latitude || null, resp.longitude || null);
         this.createMarker({
           lat: resp.latitude,
@@ -86,25 +89,6 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription && this.subscription.unsubscribe();
   }
-
-  public onFormChanged() {
-    for (const field in this.userFormErrors) {
-      if (!this.userFormErrors.hasOwnProperty(field)) {
-        continue;
-      }
-
-      // Clear previous errors
-      this.userFormErrors[field] = {};
-
-      // Get the control
-      const control = this.userForm.get(field);
-
-      if (control && control.dirty && !control.valid) {
-        this.userFormErrors[field] = control.errors;
-      }
-    }
-  }
-
 
   public map: any;
   public center: LatLng = latLng(46.879966, -121.726909);
@@ -171,7 +155,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     this.layers.push(this.newMarker);
     this.newMarker.on('dragend', () => {
       let { lat: Latitude, lng: Longitude } = this.newMarker.getLatLng();
-      this.userForm.patchValue({ Latitude, Longitude });
+      this.frm.patchValue({ Latitude, Longitude });
     });
     return this.newMarker;
   }
@@ -184,7 +168,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     }
     this.ngZone.runOutsideAngular(() => {
       let { lat: Latitude, lng: Longitude } = latlng;
-      this.userForm.patchValue({ Latitude, Longitude });
+      this.frm.patchValue({ Latitude, Longitude });
       this.ngZone.run(() => {
       });
     });
@@ -193,7 +177,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   public save() {
     let model = {
       ...this.user,
-      ...this.userForm.getRawValue()
+      ...this.frm.getRawValue()
     };
     this.usersService.userPatchUser(model.id, model, '2.0.0', `${this.authService.userToken.accessToken}`)
       .subscribe((resp) => {

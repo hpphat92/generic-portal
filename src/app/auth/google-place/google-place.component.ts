@@ -2,7 +2,7 @@ import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChildren
 import { GooglePlaceService } from './google-place.service';
 import { MatDialog, MatPaginator } from '@angular/material';
 import * as placeTypes from './placeType.json';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GooglePlaceDetailComponent } from './google-place-detail/google-place-detail.component';
 import * as _ from 'lodash';
 import { DataResponseResultBaseDTO, PlacesAdminService, DataResponseResultListBaseDTO } from '../../shared/api';
@@ -10,19 +10,27 @@ import { ComponentCanDeactivate } from '../../shared/guard/can-deactive';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 import { PlaceAdminDTO } from '../../shared/api/model/placeAdminDTO';
+import { BaseForm } from '../../shared/form';
 
 @Component({
   selector: 'google-place',
   templateUrl: './google-place.component.html',
   styleUrls: ['./google-place.component.scss'],
 })
-export class GooglePlaceComponent implements OnInit, AfterViewInit, ComponentCanDeactivate {
+export class GooglePlaceComponent extends BaseForm implements AfterViewInit, ComponentCanDeactivate {
 
   @ViewChildren(MatPaginator)
   public paginators;
 
+  public controlConfig = {
+    keyword: new FormControl(''),
+    radius: new FormControl(10, [Validators.required]),
+    category: new FormControl(''),
+    options: new FormControl('1'),
+    Latitude: new FormControl('', [Validators.required]),
+    Longitude: new FormControl('', [Validators.required]),
+  };
   public placeTypes = placeTypes;
-  public searchForm: FormGroup;
   public places = [];
   public loading = false;
   public savingCheckingPlaces = false;
@@ -31,9 +39,9 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit, ComponentCan
   public pageIndex = 0;
   public userLocation = {};
   public addressLocation = {};
-  public searchFormErrors = {
-    Latitude: {},
-    Longitude: {}
+  public formErrors = {
+    Latitude: {} as any,
+    Longitude: {} as any
   };
   public pageResults = {
     count: 0,
@@ -58,21 +66,11 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit, ComponentCan
               public mdDialog: MatDialog,
               public formBuilder: FormBuilder,
               public placesAdminService: PlacesAdminService) {
-    this.searchForm = this.formBuilder.group({
-      keyword: [''],
-      radius: [10, [Validators.required]],
-      category: [''],
-      options: ['1'],
-      Latitude: ['', [Validators.required]],
-      Longitude: ['', [Validators.required]]
-    });
-    this.searchForm.valueChanges.subscribe(() => {
-      this.onFormChanged();
-    });
+    super();
     this.gainCurrentLocation()
       .then(({ latitude, longitude }) => {
         this.userLocation = { latitude, longitude };
-        this.searchForm.patchValue({
+        this.frm.patchValue({
           Latitude: latitude,
           Longitude: longitude
         });
@@ -112,24 +110,6 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit, ComponentCan
     });
   }
 
-  public onFormChanged() {
-    for (const field in this.searchFormErrors) {
-      if (!this.searchFormErrors.hasOwnProperty(field)) {
-        continue;
-      }
-
-      // Clear previous errors
-      this.searchFormErrors[field] = {};
-
-      // Get the control
-      const control = this.searchForm.get(field);
-
-      if (control && control.dirty && !control.valid) {
-        this.searchFormErrors[field] = control.errors;
-      }
-    }
-  }
-
   gainCurrentLocation() {
 
     return new Promise((resolve, reject) => {
@@ -148,7 +128,7 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit, ComponentCan
   }
 
   getCurrentLocationFromForm() {
-    let formValue = this.searchForm.getRawValue();
+    let formValue = this.frm.getRawValue();
 
     switch (formValue.options) {
       case '1':
@@ -160,7 +140,7 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit, ComponentCan
     }
   }
 
-  doSearchForm(model) {
+  dofrm(model) {
     return new Promise((resolve, reject) => {
       let search = (model, pIndex = 0) => {
         this.googlePlaceService.search(model).then(({ resp, pagination }) => {
@@ -196,7 +176,7 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit, ComponentCan
     }
     this.listCheckingPlaces = [];
     let { latitude, longitude } = this.getCurrentLocationFromForm() as any;
-    let { keyword, radius, category } = this.searchForm.getRawValue();
+    let { keyword, radius, category } = this.frm.getRawValue();
     this.pageResults.reset();
     let nextPageToken = '';
     this.loading = true;
@@ -207,7 +187,7 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit, ComponentCan
     this.paginators.toArray().forEach((pa) => {
       pa.firstPage();
     });
-    this.doSearchForm({
+    this.dofrm({
       latitude,
       longitude,
       radius,
@@ -221,10 +201,6 @@ export class GooglePlaceComponent implements OnInit, AfterViewInit, ComponentCan
       this.loading = true;
     })
   }
-
-  ngOnInit(): void {
-  }
-
   confirmChanges() {
     if (this.listCheckingPlaces.length) {
       return confirm('WARNING: You have unsaved changes. Press Cancel to go back and save these changes, or OK to lose these changes.');

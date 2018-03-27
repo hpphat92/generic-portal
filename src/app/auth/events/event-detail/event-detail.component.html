@@ -1,12 +1,12 @@
 <div class="page-layout blank p-24">
   <h2>Events Detail</h2>
   <div class="save-button">
-    <button mat-button="" mat-raised-button="" [disabled]="!eventDetailForm.valid" color="primary" (click)="save()">Save
+    <button mat-button="" mat-raised-button="" [disabled]="!frm.valid" color="primary" (click)="save()">Save
     </button>
     <button mat-button="" (click)="cancel()">Cancel</button>
   </div>
 </div>
-<form name="eventDetailForm" [formGroup]="eventDetailForm" novalidate class="page-container">
+<form name="frm" [formGroup]="frm" novalidate class="page-container">
   <div class="image-header-url">
     <image-uploader formControlName="ImageUrl"></image-uploader>
   </div>
@@ -18,39 +18,39 @@
       <div>
         <mat-form-field>
           <input matInput placeholder="Name" formControlName="Title">
-          <mat-error *ngIf="eventDetailErrors.Title.required">
+          <mat-error *ngIf="formErrors.Title.required">
             Title is required
           </mat-error>
         </mat-form-field>
         <mat-form-field>
         <textarea matInput name="Description" formControlName="Description" rows="8"
                   placeholder="Description"></textarea>
-          <mat-error *ngIf="eventDetailErrors.Description.required">
+          <mat-error *ngIf="formErrors.Description.required">
             Description is required
           </mat-error>
         </mat-form-field>
         <mat-form-field>
           <input type="tel" matInput placeholder="Phone Number" formControlName="PhoneNumber">
-          <mat-error *ngIf="eventDetailErrors.PhoneNumber.required">
+          <mat-error *ngIf="formErrors.PhoneNumber.required">
             Phone Number is required
           </mat-error>
         </mat-form-field>
         <mat-form-field>
           <input type="text" matInput placeholder="Address" formControlName="Address">
-          <!--<mat-error *ngIf="eventDetailErrors.Address.required">-->
+          <!--<mat-error *ngIf="formErrors.Address.required">-->
           <!--Address is required-->
           <!--</mat-error>-->
         </mat-form-field>
         <mat-form-field>
           <input type="url" matInput placeholder="Website" formControlName="Website">
-          <!--<mat-error *ngIf="eventDetailErrors.Website.required">-->
+          <!--<mat-error *ngIf="formErrors.Website.required">-->
           <!--Website is required-->
           <!--</mat-error>-->
         </mat-form-field>
 
         <mat-form-field>
           <input type="text" matInput placeholder="Opening Hours" formControlName="OpeningHours">
-          <mat-error *ngIf="eventDetailErrors.OpeningHours.required">
+          <mat-error *ngIf="formErrors.OpeningHours.required">
             Opening Hours is required
           </mat-error>
         </mat-form-field>
@@ -59,10 +59,10 @@
           <mat-form-field>
             <input type="number" min="-90" max="90" (change)="onLocationInputChanged()" matInput placeholder="Latitude"
                    formControlName="Latitude">
-            <mat-error *ngIf="eventDetailErrors.Latitude.required">
+            <mat-error *ngIf="formErrors.Latitude.required">
               Latitude is required
             </mat-error>
-            <mat-error *ngIf="eventDetailErrors.Latitude.min || eventDetailErrors.Latitude.max">
+            <mat-error *ngIf="formErrors.Latitude.min || formErrors.Latitude.max">
               Latitude should between -90 and 90.
             </mat-error>
           </mat-form-field>
@@ -70,10 +70,10 @@
           <mat-form-field>
             <input type="number" min="-180" max="180" (change)="onLocationInputChanged()" matInput
                    placeholder="Longitude" formControlName="Longitude">
-            <mat-error *ngIf="eventDetailErrors.Longitude.required">
+            <mat-error *ngIf="formErrors.Longitude.required">
               Longitude is required
             </mat-error>
-            <mat-error *ngIf="eventDetailErrors.Longitude.max || eventDetailErrors.Longitude.min">
+            <mat-error *ngIf="formErrors.Longitude.max || formErrors.Longitude.min">
               Longitude should between -180 and 180.
             </mat-error>
           </mat-form-field>
@@ -89,7 +89,7 @@
     </div>
   </div>
   <div class="save-button">
-    <button mat-button="" mat-raised-button="" [disabled]="!eventDetailForm.valid" color="primary" (click)="save()">Save
+    <button mat-button="" mat-raised-button="" [disabled]="!frm.valid" color="primary" (click)="save()">Save
     </button>
     <button mat-button="" (click)="cancel()">Cancel</button>
   </div>

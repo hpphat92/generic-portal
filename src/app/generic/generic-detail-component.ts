@@ -1,6 +1,6 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { GenericService } from './generic.service';
 import { AuthService } from '../shared/services/auth';
@@ -11,15 +11,18 @@ import { BaseForm } from '../shared/form';
   templateUrl: './generic-detail-component.html',
   styleUrls: ['./generic-detail-component.scss']
 })
-export class GenericDetailComponent extends BaseForm implements OnDestroy {
+export class GenericDetailComponent extends BaseForm implements OnDestroy, OnInit {
   public config: any = {};
   public columns: any;
-  public form: FormGroup;
-  public formError = {};
+  public frm: FormGroup;
+  public formErrors = {};
   public api;
   public onDetail = false;
   public paramSubscriber;
 
+  public ngOnInit(): void {
+    super.ngOnInit();
+  }
   ngOnDestroy(): void {
     this.paramSubscriber && this.paramSubscriber.unsubscribe();
   }
@@ -43,26 +46,22 @@ export class GenericDetailComponent extends BaseForm implements OnDestroy {
     this.config = this.route.snapshot.data['config'];
     this.api = this.genericService.getInstance(this.config.moduleName);
     this.columns = this.genericService.getColumns(this.config, true);
-    this.form = this.formBuilder.group(
-      {
-        id: [''],
-        Id: [''],
-        ..._.fromPairs(_.map(this.columns, (col) => [col[0], ['', [Validators.required]]]))
-      });
-    this.form.valueChanges.subscribe(() => {
-      this.onFormChanged();
-    })
+    this.controlConfig = {
+      id: new FormControl(''),
+      Id: new FormControl(''),
+      ..._.fromPairs(_.map(this.columns, (col) => [[col[0]],new FormControl('', [Validators.required])])),
+    };
   }
 
   public loadData(id) {
     this.api.getDetailItem(id)
       .subscribe((resp) => {
-        this.form.patchValue(resp.Data || resp.data || resp);
+        this.frm.patchValue(resp.Data || resp.data || resp);
       })
   }
 
   public save() {
-    let model = this.form.getRawValue();
+    let model = this.frm.getRawValue();
     let subscription;
     if (model.id || model.Id) {
       subscription = this.api.patchItem(model.id || model.Id, model);

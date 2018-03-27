@@ -1,20 +1,20 @@
 <div class="page-layout blank p-24">
   <h2>{{config.moduleName}} {{onDetail?'Detail':'Create'}}</h2>
   <div class="save-button">
-    <button mat-button="" mat-raised-button="" [disabled]="!form.valid" color="primary" (click)="save()">Save
+    <button mat-button="" mat-raised-button="" [disabled]="!frm?.valid" color="primary" (click)="save()">Save
     </button>
     <button mat-button="" (click)="cancel()">Cancel</button>
   </div>
 </div>
 <div class="page-container">
-  <form name="detailForm" [formGroup]="form" novalidate (submit)="save()">
+  <form name="detailForm" [formGroup]="frm" novalidate (submit)="save()">
     <ng-template ngFor let-col [ngForOf]="columns">
       <mat-form-field *ngIf="col[1].type == 'date'">
         <input matInput [placeholder]="col[1].displayName || col[0]" [formControlName]="col[0]"
                [matDatepicker]="myDatepicker">
         <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
         <mat-datepicker #myDatepicker></mat-datepicker>
-        <mat-error *ngIf="formError[col[0]]?.required">
+        <mat-error *ngIf="formErrors[col[0]]?.required">
           {{col[1].displayName || col[0]}} is required
         </mat-error>
       </mat-form-field>
@@ -29,7 +29,7 @@
           <mat-option value="">Unknown</mat-option>
           <mat-option *ngFor="let op of col[1].sourceData" [value]="op.value">{{op.text}}</mat-option>
         </mat-select>
-        <mat-error *ngIf="formError[col[0]]?.required">
+        <mat-error *ngIf="formErrors[col[0]]?.required">
           {{col[1].displayName || col[0]}} is required
         </mat-error>
       </mat-form-field>
@@ -43,7 +43,7 @@
               [float]="true"></rating>
       <mat-form-field *ngIf="col[1].type === 'text' || !col[1].type">
         <input matInput [placeholder]="col[1].displayName || col[0]" [formControlName]="col[0]">
-        <mat-error *ngIf="formError[col[0]]?.required">
+        <mat-error *ngIf="formErrors[col[0]]?.required">
           {{col[1].displayName || col[0]}} is required
         </mat-error>
       </mat-form-field>

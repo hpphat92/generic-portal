@@ -2,21 +2,21 @@
   <h2>Google Places Search</h2>
 </div>
 <div class="page-content">
-  <form [formGroup]="searchForm" (ngSubmit)="!loading && searchPlace()" class="search-container">
+  <form name="frm" [formGroup]="frm" (ngSubmit)="!loading && searchPlace()" class="search-container">
     <div class="filter-container">
       <mat-radio-group formControlName="options" (change)="onSelectionChanged($event)">
         <mat-radio-button value="1">Your current location</mat-radio-button>
         <mat-radio-button value="2">Manual entered location</mat-radio-button>
         <mat-radio-button value="3">Manual entered address</mat-radio-button>
       </mat-radio-group>
-      <div class="form-inline" *ngIf="searchForm.controls['options'].value === '2'">
+      <div class="form-inline" *ngIf="frm.controls['options'].value === '2'">
         <mat-form-field>
           <input type="number" min="-90" max="90" matInput placeholder="Latitude"
                  formControlName="Latitude">
-          <mat-error *ngIf="searchFormErrors.Latitude.required">
+          <mat-error *ngIf="formErrors.Latitude.required">
             Latitude is required
           </mat-error>
-          <mat-error *ngIf="searchFormErrors.Latitude.min || searchFormErrors.Latitude.max">
+          <mat-error *ngIf="formErrors.Latitude.min || formErrors.Latitude.max">
             Latitude should between -90 and 90.
           </mat-error>
         </mat-form-field>
@@ -24,15 +24,15 @@
         <mat-form-field>
           <input type="number" min="-180" max="180" matInput
                  placeholder="Longitude" formControlName="Longitude">
-          <mat-error *ngIf="searchFormErrors.Longitude.required">
+          <mat-error *ngIf="formErrors.Longitude.required">
             Longitude is required
           </mat-error>
-          <mat-error *ngIf="searchFormErrors.Longitude.max || searchFormErrors.Longitude.min">
+          <mat-error *ngIf="formErrors.Longitude.max || formErrors.Longitude.min">
             Longitude should between -180 and 180.
           </mat-error>
         </mat-form-field>
       </div>
-      <div class="form-inline address" [class.hidden]="searchForm.controls['options'].value !== '3'">
+      <div class="form-inline address" [class.hidden]="frm.controls['options'].value !== '3'">
         <input type="text" id="autocomplete">
       </div>
       <mat-form-field class="keyword">
@@ -49,7 +49,7 @@
       </mat-form-field>
     </div>
     <button mat-button mat-raised-button color="primary"
-            [disabled]="loading || (searchForm.controls['options'].value === '2'? searchForm.invalid: !searchForm.controls['radius'].value)"
+            [disabled]="loading || (frm.controls['options'].value === '2'? frm.invalid: !frm.controls['radius'].value)"
             type="submit">
       <mat-icon>search</mat-icon>
       Search

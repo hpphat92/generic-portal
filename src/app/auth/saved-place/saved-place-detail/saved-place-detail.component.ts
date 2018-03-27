@@ -1,12 +1,11 @@
-import { Component, ElementRef, EventEmitter, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import * as _config from '../../../../config.json';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { PlacesAdminService } from '../../../shared/api';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import * as placeTypes from '../placeType.json';
-import { UploadInput, UploadOutput } from 'ngx-uploader';
+import { BaseForm } from '../../../shared/form';
 
 let config = _config as any;
 
@@ -15,14 +14,23 @@ let config = _config as any;
   templateUrl: './saved-place-detail.component.html',
   styleUrls: ['./saved-place-detail.component.scss'],
 })
-export class SavedPlaceDetailComponent implements OnInit, OnDestroy {
+export class SavedPlaceDetailComponent extends BaseForm implements OnInit, OnDestroy {
   private subscription: Subscription;
   public place: any = {};
   public placeCategories: any = [];
   public placeTypes = placeTypes;
-
-  public placeDetailFrm: FormGroup;
-  public placeDetailError = {
+  public controlConfig = {
+    Id: new FormControl('', []),
+    CustomName: new FormControl('', []),
+    CustomRating: new FormControl('', []),
+    CustomDescription: new FormControl('', []),
+    CustomRecommended: new FormControl('', []),
+    CustomImageUrl: new FormControl('', []),
+    CustomIcon: new FormControl('', []),
+    CustomCaregoriesList: new FormControl('', []),
+  };
+  public frm: FormGroup;
+  public formErrors = {
     customRating: {},
     customDescription: {},
     customRecommended: {},
@@ -36,6 +44,7 @@ export class SavedPlaceDetailComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute,
               private elementRef: ElementRef,
               private formBuilder: FormBuilder) {
+    super();
     this.subscription = this.router.events.subscribe((params) => {
       // this.activeBlock = params['blockId'];
       if (params instanceof NavigationEnd) {
@@ -45,44 +54,14 @@ export class SavedPlaceDetailComponent implements OnInit, OnDestroy {
         }
       }
     });
-    this.placeDetailFrm = this.formBuilder.group({
-      Id: ['', []],
-      CustomName: ['', []],
-      CustomRating: ['', []],
-      CustomDescription: ['', []],
-      CustomRecommended: ['', []],
-      CustomImageUrl: ['', []],
-      CustomIcon: ['', []],
-      CustomCaregoriesList: ['', []],
-    });
-    this.placeDetailFrm.valueChanges.subscribe(() => {
-      this.onFormChanged();
-    })
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
   }
 
   ngOnDestroy(): void {
     this.subscription && this.subscription.unsubscribe();
-  }
-
-  public onFormChanged() {
-    for (const field in this.placeDetailError) {
-      if (!this.placeDetailError.hasOwnProperty(field)) {
-        continue;
-      }
-
-      // Clear previous errors
-      this.placeDetailError[field] = {};
-
-      // Get the control
-      const control = this.placeDetailFrm.get(field);
-
-      if (control && control.dirty && !control.valid) {
-        this.placeDetailError[field] = control.errors;
-      }
-    }
   }
 
   getPlaceDetail(id) {
@@ -113,7 +92,7 @@ export class SavedPlaceDetailComponent implements OnInit, OnDestroy {
           });
         }) : [];
         this.place.CustomCaregoriesList = this.place.CustomCaregoriesList ? this.place.CustomCaregoriesList.split(',') : [];
-        this.placeDetailFrm.patchValue(this.place);
+        this.frm.patchValue(this.place);
       })
   }
 
@@ -122,12 +101,12 @@ export class SavedPlaceDetailComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    let formValue = this.placeDetailFrm.getRawValue();
+    let formValue = this.frm.getRawValue();
     formValue.CustomCaregoriesList = formValue.CustomCaregoriesList.length ? formValue.CustomCaregoriesList.join(',') : '';
     let model = {
       ...this.place,
       ...formValue
-    }
+    };
     this.placesAdminService.placesAdminUpdate(formValue.Id, model)
       .subscribe((resp) => {
         this.router.navigate(['auth', 'saved-places']);
