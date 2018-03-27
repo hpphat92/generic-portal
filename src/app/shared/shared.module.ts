@@ -11,9 +11,8 @@ import { ComponentModule } from './component/component.module';
 import { GuardModule } from './guard/guard.module';
 import { RouterModule } from '@angular/router';
 import { MomentModule } from 'angular2-moment';
-import { ConfirmDialogComponent } from "./component/confirm-dialog/confirm-dialog.component";
-import { ImageUploaderModule } from './component/image-uploader/image-uploader.module';
-import { BaseForm } from './form/form';
+import { BaseForm } from './form';
+import { CRoleManagementModule } from './services/permission';
 
 @NgModule({
   declarations: [BaseForm],
@@ -27,6 +26,7 @@ import { BaseForm } from './form/form';
     GuardModule,
     RouterModule,
     MomentModule,
+    CRoleManagementModule.forRoot(),
     LocalStorageModule.withConfig({
       prefix: 'my-trabble',
       storageType: 'localStorage'
@@ -51,7 +51,8 @@ import { BaseForm } from './form/form';
     ComponentModule,
     GuardModule,
     RouterModule,
-    BaseForm
+    BaseForm,
+    CRoleManagementModule
   ],
   entryComponents: [],
   providers: [

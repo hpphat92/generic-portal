@@ -6,7 +6,6 @@ import { SharedModule } from '../shared/shared.module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileModule } from './profile/profile.module';
-import { Permission } from '../app.constant';
 import { CanAuthorized } from '../shared/guard/guard.module';
 import { HomeModule } from './home/home.module';
 import { HomeComponent } from './home/home.component';

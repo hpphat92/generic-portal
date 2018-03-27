@@ -16,6 +16,7 @@ export class ModelConfig {
 export class GenericModuleConfig {
   public isAuth: boolean;
   public moduleName: string;
+  public roles: any;
   public moduleIconUrl: string;
   public path?: string;
   public pageTitle?: string;

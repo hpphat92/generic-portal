@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from './shared/services/auth';
 import { Title } from '@angular/platform-browser';
 import * as _config from '../config.json';
+import { PermissionService } from './shared/services/permission/permission.service';
 
 let config = _config as any;
 
@@ -18,6 +19,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
   constructor(private router: Router,
               private authService: AuthService,
+              private permissionService: PermissionService,
               private activatedRoute: ActivatedRoute,
               private title: Title) {
     this.title.setTitle(config.site.title);
@@ -26,6 +28,10 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     s.type = 'text/javascript';
     s.src = `https://maps.googleapis.com/maps/api/js?key=${config.apiKey.googleApi}&libraries=places`
     document.body.appendChild(s);
+    this.permissionService.permission = this.authService.currentUser && this.authService.currentUser.roles || [];
+    this.authService.currentUser$.subscribe((userInfo) => {
+      this.permissionService.permission = userInfo.roles;
+    });
   }
 
   ngOnDestroy(): void {

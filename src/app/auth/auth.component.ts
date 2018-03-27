@@ -45,7 +45,8 @@ export class AuthComponent implements OnInit {
       return {
         title: config.pageTitle || config.moduleName,
         href: `${config.isAuth ? '/auth/' : '/'}${config.path || config.moduleName}/all`,
-        iconUrl: config.moduleIconUrl || 'assets/images/chat.svg'
+        iconUrl: config.moduleIconUrl || 'assets/images/chat.svg',
+        roles: config.roles
       }
     })
   ];

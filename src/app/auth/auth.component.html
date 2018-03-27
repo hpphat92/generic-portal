@@ -8,7 +8,8 @@
         <img [src]="config.site.logo.sidebarLogo" alt="">
       </div>
       <div class="sidebar-menu">
-        <div class="menu-item" *ngFor="let menu of sidebarMenus" [routerLink]="menu.href"
+        <div class="menu-item" *ngFor="let menu of sidebarMenus" [permissions-include]="menu.roles"
+             [routerLink]="menu.href"
              routerLinkActive="active">
           <div class="menu-icon">
             <img [src]="menu.iconUrl" *ngIf="menu.iconUrl">

@@ -24,8 +24,7 @@ import { RatingModule } from 'ngx-rating';
     RatingModule
   ],
   entryComponents: [GenericListComponent, GenericDetailComponent],
-  exports: [
-  ],
+  exports: [],
   providers: []
 })
 export class GenericModule {
@@ -37,17 +36,17 @@ export class GenericModule {
           {
             path: (c.path || c.moduleName) + '/all',
             component: GenericListComponent,
-            data: { title: c.pageTitle },
+            data: { title: c.pageTitle, roles: c.roles },
             resolve: { config: GenericService.getProvideInjectKeyFromModuleName(c.moduleName, 'list') },
           }, {
             path: (c.path || c.moduleName) + '/new',
             component: GenericDetailComponent,
-            data: { title: c.pageTitle },
+            data: { title: c.pageTitle, roles: c.roles },
             resolve: { config: GenericService.getProvideInjectKeyFromModuleName(c.moduleName, 'detail') },
           }, {
             path: (c.path || c.moduleName) + '/:id',
             component: GenericDetailComponent,
-            data: { title: c.pageTitle },
+            data: { title: c.pageTitle, roles: c.roles },
             resolve: { config: GenericService.getProvideInjectKeyFromModuleName(c.moduleName, 'detail') },
           },
           ...findingConfig.children
