@@ -142,50 +142,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        input {
-          display: none;
-        }
-        img {
-          height: 100%;
-          width: 100%;
-          object-fit: scale-down;
-        }
-        label {
-          position: relative;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          width: 100%;
-          justify-content: center;
-          cursor: pointer;
-          &:hover {
-            background: #f8f8f8;
-            opacity: 0.95;
-          }
-          &.editable {
-            &:hover {
-              &:after {
-                position: absolute;
-                padding: 20px;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                content: 'mode_edit';
-                font-family: 'Material Icons', sans-serif;
-                background: #ffffffb3;
-                color: #111;
-                font-size: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-              }
-            }
-          }
-        }
+        position: relative;
       }
-      form {
+      .form {
         display: flex;
         flex-direction: column;
         .checkbox {
@@ -201,48 +160,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          input {
-            display: none;
-          }
-          img {
-            height: 100%;
-            width: 100%;
-            object-fit: scale-down;
-          }
-          label {
-            position: relative;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            width: 100%;
-            justify-content: center;
-            cursor: pointer;
-            &:hover {
-              background: #e2e2e2;
-              opacity: 0.95;
-            }
-            &.editable {
-              &:hover {
-                &:after {
-                  position: absolute;
-                  padding: 20px;
-                  top: 0;
-                  right: 0;
-                  bottom: 0;
-                  left: 0;
-                  content: 'mode_edit';
-                  font-family: 'Material Icons', sans-serif;
-                  background: #ffffffb3;
-                  color: #111;
-                  font-size: 40px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  cursor: pointer;
-                }
-              }
-            }
-          }
+          position: relative;
         }
       }
     }

@@ -6,32 +6,16 @@
     <button mat-button="" (click)="cancel()">Cancel</button>
   </div>
 </div>
-<div class="page-container">
+<form name="eventDetailForm" [formGroup]="eventDetailForm" novalidate class="page-container">
   <div class="image-header-url">
-    <label class="image-url" [class.editable]="eventDetailForm.controls['ImageUrl'].value">
-      <input type="file" ngFileSelect #file3 [options]="options"
-             (uploadOutput)="onUploadOutput($event, file3,'ImageUrl')"
-             [uploadInput]="uploadInput">
-      <div class="image-uploader" *ngIf="!eventDetailForm.controls['ImageUrl'].value">
-        <mat-icon>add_a_photo</mat-icon>
-        Add Photo
-      </div>
-      <img [src]="eventDetailForm.controls['ImageUrl'].value" *ngIf="eventDetailForm.controls['ImageUrl'].value" alt="">
-    </label>
+    <image-uploader formControlName="ImageUrl"></image-uploader>
   </div>
   <div class="event-data">
-    <label class="image-url" [class.editable]="eventDetailForm.controls['IconUrl'].value">
-      <input type="file" ngFileSelect #file2 [options]="options"
-             (uploadOutput)="onUploadOutput($event, file2,'IconUrl')"
-             [uploadInput]="uploadInput">
-      <div class="image-uploader" *ngIf="!eventDetailForm.controls['IconUrl'].value">
-        <mat-icon>add_a_photo</mat-icon>
-        Add Photo
-      </div>
-      <img [src]="eventDetailForm.controls['IconUrl'].value" *ngIf="eventDetailForm.controls['IconUrl'].value" alt="">
-    </label>
+    <div class="avatar">
+      <image-uploader formControlName="IconUrl" class="avatar-image-uploader"></image-uploader>
+    </div>
     <div class="profile-info">
-      <form name="eventDetailForm" [formGroup]="eventDetailForm" novalidate>
+      <div>
         <mat-form-field>
           <input matInput placeholder="Name" formControlName="Title">
           <mat-error *ngIf="eventDetailErrors.Title.required">
@@ -94,7 +78,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-      </form>
+      </div>
       <div class="map-location-viewer"
            leaflet
            [leafletCenter]="center"
@@ -109,4 +93,4 @@
     </button>
     <button mat-button="" (click)="cancel()">Cancel</button>
   </div>
-</div>
+</form>

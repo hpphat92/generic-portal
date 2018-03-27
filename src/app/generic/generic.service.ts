@@ -32,7 +32,7 @@ export class GenericService {
       if (removeReadOnly) {
         return !o[1].readOnly;
       }
-      return true;
+      return !o[1].editOnly;
     });
   }
 

@@ -1,4 +1,4 @@
-export type ModelType = 'text' | 'date' | 'dropdown' | 'photo';
+export type ModelType = 'text' | 'date' | 'dropdown' | 'photo' | 'rating';
 
 /**
  * Instance's information. This model is to describe the column name, type and display order of piece of data.
@@ -10,6 +10,7 @@ export class ModelConfig {
   public sourceData?: any;
   public readOnly?: boolean;
   public displayOrder?: number;
+  public editOnly?: boolean;
 }
 
 export class GenericModuleConfig {

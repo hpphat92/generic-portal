@@ -46,7 +46,7 @@ export class GenericListComponent {
     }).afterClosed()
       .subscribe((resp) => {
         if (resp) {
-          this.api.deleteItem(row.id)
+          this.api.deleteItem(row.id || row.Id)
             .subscribe((resp) => {
               this.loadData();
             })

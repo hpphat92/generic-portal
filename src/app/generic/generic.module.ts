@@ -9,6 +9,7 @@ import { GenericService } from './generic.service';
 import { APIS } from '../shared/api';
 import { Route, Router } from '@angular/router';
 import * as _ from 'lodash';
+import { RatingModule } from 'ngx-rating';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import * as _ from 'lodash';
     BrowserModule,
     BrowserAnimationsModule,
     NgUploaderModule,
+    RatingModule
   ],
   entryComponents: [GenericListComponent, GenericDetailComponent],
   exports: [

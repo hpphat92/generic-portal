@@ -41,6 +41,22 @@ export const moduleConfig: GenericModuleConfig[] = [
         type: 'photo',
         displayName: 'Preview',
         displayOrder: 1
+      },
+      'Vicinity': {
+        displayName: 'Vicinity',
+        displayOrder: 1
+      },
+      'Rating': {
+        type: 'rating',
+        displayName: 'Rating',
+        displayOrder: 1,
+        editOnly: true
+      },
+      'Icon': {
+        displayName: 'Icon',
+        type: 'photo',
+        displayOrder: 1,
+        editOnly: true
       }
     }
   },

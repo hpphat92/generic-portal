@@ -12,6 +12,7 @@ import { GuardModule } from './guard/guard.module';
 import { RouterModule } from '@angular/router';
 import { MomentModule } from 'angular2-moment';
 import { ConfirmDialogComponent } from "./component/confirm-dialog/confirm-dialog.component";
+import { ImageUploaderModule } from './component/image-uploader/image-uploader.module';
 
 @NgModule({
   // declarations: [...SHARED_PIPES],
@@ -48,7 +49,7 @@ import { ConfirmDialogComponent } from "./component/confirm-dialog/confirm-dialo
     LoadingModule,
     ComponentModule,
     GuardModule,
-    RouterModule
+    RouterModule,
   ],
   entryComponents: [],
   providers: [

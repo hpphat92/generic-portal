@@ -46,6 +46,7 @@ export class GenericDetailComponent extends BaseForm implements OnDestroy {
     this.form = this.formBuilder.group(
       {
         id: [''],
+        Id: [''],
         ..._.fromPairs(_.map(this.columns, (col) => [col[0], ['', [Validators.required]]]))
       });
     this.form.valueChanges.subscribe(() => {
@@ -56,17 +57,18 @@ export class GenericDetailComponent extends BaseForm implements OnDestroy {
   public loadData(id) {
     this.api.getDetailItem(id)
       .subscribe((resp) => {
-        this.form.patchValue(resp);
+        this.form.patchValue(resp.Data || resp.data || resp);
       })
   }
 
   public save() {
     let model = this.form.getRawValue();
     let subscription;
-    if (model.id) {
-      subscription = this.api.patchItem(model.id, model);
+    if (model.id || model.Id) {
+      subscription = this.api.patchItem(model.id || model.Id, model);
     } else {
       delete model.id;
+      delete model.Id;
       subscription = this.api.postItem(model);
     }
     subscription.subscribe(() => {

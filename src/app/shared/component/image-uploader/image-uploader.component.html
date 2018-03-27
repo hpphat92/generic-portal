@@ -1,0 +1,10 @@
+<label class="image-url" [class.editable]="imageUrl">
+  <input type="file" ngFileSelect #file
+         (uploadOutput)="onUploadOutput($event, file)"
+         [uploadInput]="uploadInput">
+  <div class="image-uploader" *ngIf="!imageUrl">
+    <mat-icon>add_a_photo</mat-icon>
+    Add Photo
+  </div>
+  <img [src]="imageUrl" *ngIf="imageUrl" alt="">
+</label>

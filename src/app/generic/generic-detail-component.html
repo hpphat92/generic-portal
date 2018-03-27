@@ -18,6 +18,12 @@
           {{col[1].displayName || col[0]}} is required
         </mat-error>
       </mat-form-field>
+      <div class="form-inline" *ngIf="col[1].type == 'photo'">
+        <div class="label-text">{{col[1].displayName || col[0]}}</div>
+        <div class="image">
+          <image-uploader  [formControlName]="col[0]"></image-uploader>
+        </div>
+      </div>
       <mat-form-field *ngIf="col[1].type == 'dropdown'">
         <mat-select [placeholder]="col[1].displayName || col[0]" [formControlName]="col[0]">
           <mat-option value="">Unknown</mat-option>
@@ -27,7 +33,14 @@
           {{col[1].displayName || col[0]}} is required
         </mat-error>
       </mat-form-field>
-
+      <rating [formControlName]="col[0]"
+              [max]="5"
+              *ngIf="col[1].type == 'rating'"
+              fullIcon="★"
+              emptyIcon="☆"
+              [readonly]="false"
+              [disabled]="false"
+              [float]="true"></rating>
       <mat-form-field *ngIf="col[1].type === 'text' || !col[1].type">
         <input matInput [placeholder]="col[1].displayName || col[0]" [formControlName]="col[0]">
         <mat-error *ngIf="formError[col[0]]?.required">

@@ -15,4 +15,19 @@
     width: 100%;
     padding: 5px 0;
   }
+  .form-inline {
+    display: flex;
+    .label-text {
+      min-width: 30%;
+      width: 30%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .image {
+      position: relative;
+      flex-grow: 1;
+      height: 250px;
+    }
+  }
 }

@@ -39,21 +39,11 @@
       </div>
     </div>
   </div>
-  <div class="right-panel-edit">
+  <form  name="placeDetailFrm" (submit)="save()" [formGroup]="placeDetailFrm" novalidate class="right-panel-edit">
     <div class="image-header-url">
-      <label class="image-url" [class.editable]="placeDetailFrm.controls['CustomImageUrl'].value">
-        <input type="file" ngFileSelect #file3
-               (uploadOutput)="onUploadOutput($event, file3,'CustomImageUrl')"
-               [uploadInput]="uploadInput">
-        <div class="image-uploader" *ngIf="!placeDetailFrm.controls['CustomImageUrl'].value">
-          <mat-icon>add_a_photo</mat-icon>
-          Add Custom Photo
-        </div>
-        <img [src]="placeDetailFrm.controls['CustomImageUrl'].value"
-             *ngIf="placeDetailFrm.controls['CustomImageUrl'].value" alt="">
-      </label>
+      <image-uploader formControlName="CustomImageUrl"></image-uploader>
     </div>
-    <form name="placeDetailFrm" (submit)="save()" [formGroup]="placeDetailFrm" novalidate>
+    <div class="form">
       <mat-form-field>
         <input matInput placeholder="Custom Name" formControlName="CustomName"/>
       </mat-form-field>
@@ -82,17 +72,7 @@
       <div class="icon-uploader-field">
         <div class="rating-title">Custom Icon</div>
         <div class="icon-url">
-          <label class="image-url" [class.editable]="placeDetailFrm.controls['CustomIcon'].value">
-            <input type="file" ngFileSelect #file4
-                   (uploadOutput)="onUploadOutput($event, file4,'CustomIcon')"
-                   [uploadInput]="uploadInput">
-            <div class="image-uploader" *ngIf="!placeDetailFrm.controls['CustomIcon'].value">
-              <mat-icon>add_a_photo</mat-icon>
-              Add Photo
-            </div>
-            <img [src]="placeDetailFrm.controls['CustomIcon'].value" *ngIf="placeDetailFrm.controls['CustomIcon'].value"
-                 alt="">
-          </label>
+          <image-uploader formControlName="CustomIcon"></image-uploader>
         </div>
       </div>
       <!--<div class="save-button">-->
@@ -100,6 +80,6 @@
       <!--</button>-->
       <!--<button mat-button="" (click)="cancel()">Cancel</button>-->
       <!--</div>-->
-    </form>
-  </div>
+    </div>
+  </form>
 </div>

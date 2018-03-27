@@ -11,51 +11,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    input {
-      display: none;
-    }
-    img {
+    position: relative;
+
+    image-uploader {
       height: 100%;
-      width: 100%;
-      object-fit: scale-down;
-    }
-    label {
-      position: relative;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      width: 100%;
-      justify-content: center;
-      cursor: pointer;
-      &:hover {
-        background: #f8f8f8;
-        opacity: 0.95;
-      }
-      &.editable {
-        &:hover {
-          &:after {
-            position: absolute;
-            padding: 20px;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            content: 'mode_edit';
-            font-family: 'Material Icons', sans-serif;
-            background: #ffffffb3;
-            color: #111;
-            font-size: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-          }
-        }
-      }
     }
   }
   .event-data {
     display: flex;
+    align-items: flex-start;
+    .avatar {
+      margin: 0 10px;
+      width: 30%;
+      min-width: 30%;
+      max-width: 30%;
+      position: relative;
+      image-uploader {
+        padding-bottom: 100%;
+        position: absolute;
+      }
+    }
     .image-url {
       display: flex;
       justify-content: center;
@@ -65,37 +40,6 @@
       border-radius: 50%;
       padding: 0;
       margin: 20px;
-      &.editable {
-        &:hover {
-          &:after {
-            position: absolute;
-            padding: 20px;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            content: 'mode_edit';
-            font-family: 'Material Icons', sans-serif;
-            background: #ffffffb3;
-            color: #111;
-            font-size: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-          }
-        }
-      }
-      img {
-        height: 256px;
-        width: 256px;
-        min-width: 256px;
-        max-width: 256px;
-        border-radius: 50%;
-      }
-      input {
-        display: none;
-      }
       .image-uploader {
         width: 256px;
         height: 256px;
@@ -116,13 +60,11 @@
         width: 100%;
         height: 500px;
       }
-      form {
-        mat-form-field {
-          width: 100%;
-        }
-        .form-inline {
-          display: flex;
-        }
+      mat-form-field {
+        width: 100%;
+      }
+      .form-inline {
+        display: flex;
       }
     }
   }

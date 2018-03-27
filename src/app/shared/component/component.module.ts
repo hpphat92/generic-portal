@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { LoadingModule } from 'ngx-loading';
 import { DragulaModule } from 'ng2-dragula';
 import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
+import { ImageUploaderModule } from './image-uploader/image-uploader.module';
 
 @NgModule({
   declarations: [UserAvatarComponent, ConfirmDialogComponent],
@@ -20,9 +21,10 @@ import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.componen
     NgUploaderModule,
     ReactiveFormsModule,
     DragulaModule,
+    ImageUploaderModule
   ],
   entryComponents: [ConfirmDialogComponent],
-  exports: [UserAvatarComponent, ConfirmDialogComponent]
+  exports: [UserAvatarComponent, ConfirmDialogComponent, ImageUploaderModule]
 })
 export class ComponentModule {
 

@@ -20,13 +20,6 @@ export class SavedPlaceDetailComponent implements OnInit, OnDestroy {
   public place: any = {};
   public placeCategories: any = [];
   public placeTypes = placeTypes;
-  public priceDescription = {
-    0: 'Free',
-    1: 'Inexpensive',
-    2: 'Moderate',
-    3: 'Expensive',
-    4: 'Very Expensive',
-  };
 
   public placeDetailFrm: FormGroup;
   public placeDetailError = {
@@ -139,30 +132,5 @@ export class SavedPlaceDetailComponent implements OnInit, OnDestroy {
       .subscribe((resp) => {
         this.router.navigate(['auth', 'saved-places']);
       })
-  }
-
-  // File
-  public uploadInput: EventEmitter<UploadInput> = new EventEmitter<UploadInput>();
-
-  public onUploadOutput(output: UploadOutput, file: any, field: string): any {
-    switch (output.type) {
-      case 'allAddedToQueue':
-        // uncomment this if you want to auto upload files when added
-        const event: UploadInput = {
-          type: 'uploadAll',
-          url: 'https://trabbleclientportalapi.azurewebsites.net/api/files',
-          method: 'POST',
-          headers: { Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VySWQiOiIzZjc3MGY3OGM2ODQ0NDFhOTNlYzJmMzNkMTEwOWM4ZSIsIkV4cGlyZWRJblV0YyI6IjIwMTgtMDItMDZUMTI6NTk6MTUuODA0NTY5OVoifQ.Xj34mCYnr1ZG2hhYNm2XDQ64dlYFrv8mdR0m_di45h8' }
-        };
-        if (file.value) {
-          this.uploadInput.emit(event);
-        }
-        break;
-      case 'done':
-        this.placeDetailFrm.patchValue({
-          [field]: output.file.response.data.url
-        });
-        break;
-    }
   }
 }
